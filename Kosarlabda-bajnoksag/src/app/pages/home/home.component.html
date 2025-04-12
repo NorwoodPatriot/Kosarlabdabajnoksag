@@ -1,0 +1,44 @@
+<div class="home-container">
+    <section class="hero">
+      <h1>Üdvözöljük a Magyar Kosárlabda Bajnokság hivatalos oldalán!</h1>
+      <p>Kövesd velünk a szezon izgalmait!</p>
+    </section>
+  
+    <div class="content-grid">
+      <section class="news-section">
+        <h2>Legfrissebb hírek</h2>
+        <div class="news-card" *ngFor="let news of featuredNews">
+          <h3>{{news.title}}</h3>
+          <p class="news-date">{{news.date}}</p>
+          <p>{{news.summary}}</p>
+        </div>
+      </section>
+  
+      <section class="stats-section">
+        <div class="top-players">
+          <h2>A legjobb játékosok</h2>
+          <div class="player-card" *ngFor="let player of topPlayers">
+            <h3>{{player.name}}</h3>
+            <p>{{player.team}}</p>
+            <div class="player-stats">
+              <span>Pontok: {{player.points}}</span>
+              <span>Lepattanó: {{player.rebounds}}</span>
+              <span>Gólpassz: {{player.assists}}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="upcoming-matches">
+          <h2>Közelgő mérkőzések</h2>
+          <div class="match-card" *ngFor="let match of upcomingMatches">
+            <div class="match-teams">
+              <span class="home-team">{{match.homeTeam}}</span>
+              <span class="vs">vs</span>
+              <span class="away-team">{{match.awayTeam}}</span>
+            </div>
+            <p class="match-date">{{match.date}}</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>

@@ -1,0 +1,154 @@
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .hero {
+    background-color: #006400;
+    color: white;
+    padding: 40px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  
+    h1 {
+      margin: 0;
+      font-size: 2.2rem;
+    }
+  
+    p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+  }
+  
+  .content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+  
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .news-section {
+    h2 {
+      color: #006400;
+      border-bottom: 2px solid #006400;
+      padding-bottom: 10px;
+    }
+  }
+  
+  .news-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  
+    h3 {
+      margin-top: 0;
+      color: #333;
+    }
+  
+    .news-date {
+      color: #666;
+      font-size: 0.9rem;
+      margin: 5px 0;
+    }
+  }
+  
+  .stats-section {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .top-players, .upcoming-matches {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+  
+    h2 {
+      color: #006400;
+      border-bottom: 2px solid #006400;
+      padding-bottom: 10px;
+      margin-top: 0;
+    }
+  }
+  
+  .player-card {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  
+    &:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+  
+    h3 {
+      margin: 0 0 5px 0;
+      color: #006400;
+    }
+  
+    p {
+      margin: 0 0 10px 0;
+      color: #666;
+    }
+  }
+  
+  .player-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+  
+    span {
+      background: #f5f5f5;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+  }
+  
+  .match-card {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+  
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+  
+  .match-teams {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+  
+    .home-team {
+      font-weight: bold;
+    }
+  
+    .vs {
+      color: #666;
+      font-size: 0.9rem;
+    }
+  
+    .away-team {
+      font-weight: bold;
+    }
+  }
+  
+  .match-date {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+  }

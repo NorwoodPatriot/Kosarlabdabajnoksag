@@ -1,0 +1,24 @@
+<!--<router-outlet />-->
+<app-header (selectedPage)="changePage($event)"></app-header>
+@switch (page) {
+    @case ('home') {
+      <div class="home">
+        <app-home></app-home>
+      </div>
+    }
+    @case ('tabella') {
+        <app-tabella></app-tabella>
+    }
+    @case ('meccsnaptar') {
+        <app-meccsnaptar></app-meccsnaptar>
+    }
+    @case ('jatekoslistazas'){
+        <app-jatekoslistazas></app-jatekoslistazas>
+    }
+    @case ('csapatlistazas') {
+        <app-csapatlistazas></app-csapatlistazas>
+    }
+    @default {
+      <h1>Page not found ...</h1>
+    }
+  }

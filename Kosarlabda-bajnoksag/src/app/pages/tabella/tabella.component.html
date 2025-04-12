@@ -1,0 +1,42 @@
+<div class="standings-container">
+    <h2>Magyar Kosárlabda Bajnokság Tabella</h2>
+    
+    <table class="standings-table">
+      <thead>
+        <tr>
+          <th (click)="sortStandings('position')"># {{getSortIcon('position')}}</th>
+          <th (click)="sortStandings('team')">Csapat {{getSortIcon('team')}}</th>
+          <th (click)="sortStandings('matchesPlayed')">M {{getSortIcon('matchesPlayed')}}</th>
+          <th (click)="sortStandings('wins')">GY {{getSortIcon('wins')}}</th>
+          <th (click)="sortStandings('draws')">D {{getSortIcon('draws')}}</th>
+          <th (click)="sortStandings('losses')">V {{getSortIcon('losses')}}</th>
+          <th (click)="sortStandings('points')">P {{getSortIcon('points')}}</th>
+          <th (click)="sortStandings('goalsFor')">PF {{getSortIcon('goalsFor')}}</th>
+          <th (click)="sortStandings('goalsAgainst')">PA {{getSortIcon('goalsAgainst')}}</th>
+          <th (click)="sortStandings('goalDifference')">+/- {{getSortIcon('goalDifference')}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let team of standings" [class.highlight]="team.position <= 4">
+          <td>{{team.position}}</td>
+          <td class="team-name">{{team.team}}</td>
+          <td>{{team.matchesPlayed}}</td>
+          <td>{{team.wins}}</td>
+          <td>{{team.draws}}</td>
+          <td>{{team.losses}}</td>
+          <td class="points">{{team.points}}</td>
+          <td>{{team.goalsFor}}</td>
+          <td>{{team.goalsAgainst}}</td>
+          <td [class.positive]="team.goalDifference > 0" [class.negative]="team.goalDifference < 0">
+            {{team.goalDifference > 0 ? '+' : ''}}{{team.goalDifference}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="legend">
+      <div><span class="highlight-box"></span> Rájátszás helyezés</div>
+      <div><span class="positive"></span> Pozitív gólkülönbség</div>
+      <div><span class="negative"></span> Negatív gólkülönbség</div>
+    </div>
+  </div>

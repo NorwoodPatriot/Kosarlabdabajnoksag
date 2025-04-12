@@ -1,0 +1,33 @@
+<div class="player-list-container">
+    <h2>Magyar Kosárlabda Játékosok</h2>
+    
+    <div class="team-selector">
+      <label for="team-select">Csapat kiválasztása:</label>
+      <select id="team-select" [(ngModel)]="selectedTeam">
+        <option *ngFor="let team of teams" [value]="team">{{team}}</option>
+      </select>
+    </div>
+  
+    <table class="player-table">
+      <thead>
+        <tr>
+          <th (click)="sortPlayers('name')">Név {{getSortIcon('name')}}</th>
+          <th (click)="sortPlayers('team')">Csapat {{getSortIcon('team')}}</th>
+          <th (click)="sortPlayers('position')">Poszt {{getSortIcon('position')}}</th>
+          <th (click)="sortPlayers('height')">Magasság (cm) {{getSortIcon('height')}}</th>
+          <th (click)="sortPlayers('birthYear')">Születési év {{getSortIcon('birthYear')}}</th>
+          <th (click)="sortPlayers('nationality')">Nemzetiség {{getSortIcon('nationality')}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let player of filteredPlayers">
+          <td>{{player.name}}</td>
+          <td>{{player.team}}</td>
+          <td>{{player.position}}</td>
+          <td>{{player.height}}</td>
+          <td>{{player.birthYear}}</td>
+          <td>{{player.nationality}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

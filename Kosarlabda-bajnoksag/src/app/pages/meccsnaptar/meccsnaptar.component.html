@@ -1,0 +1,20 @@
+<div class="schedule-container">
+  <h2>Következő mérkőzések</h2>
+  
+  <div class="team-schedule" *ngFor="let team of teams">
+    <h3>{{team}} következő 2 mérkőzése:</h3>
+    <div class="match-list">
+      <div class="match-item" *ngFor="let match of getNextMatches(team)">
+        <div class="match-teams">
+          <span class="home-team">{{match.homeTeam}}</span>
+          <span class="vs">vs</span>
+          <span class="away-team">{{match.awayTeam}}</span>
+        </div>
+        <div class="match-details">
+          <span class="match-date">{{formatDate(match.date)}}</span>
+          <span class="match-location">{{match.location}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

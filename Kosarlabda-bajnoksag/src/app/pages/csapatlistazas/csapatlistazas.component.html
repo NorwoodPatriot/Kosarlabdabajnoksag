@@ -1,0 +1,24 @@
+<div class="team-list-container">
+    <h2>Magyar Kosárlabda Csapatok</h2>
+    
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th (click)="sortTeams('name')">Csapatnév {{getSortIcon('name')}}</th>
+          <th (click)="sortTeams('city')">Város {{getSortIcon('city')}}</th>
+          <th (click)="sortTeams('founded')">Alapítás éve {{getSortIcon('founded')}}</th>
+          <th (click)="sortTeams('championships')">Bajnoki címek {{getSortIcon('championships')}}</th>
+          <th>Bajnokság</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let team of teams">
+          <td>{{team.name}}</td>
+          <td>{{team.city}}</td>
+          <td>{{team.founded}}</td>
+          <td>{{team.championships}}</td>
+          <td>{{team.league}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
