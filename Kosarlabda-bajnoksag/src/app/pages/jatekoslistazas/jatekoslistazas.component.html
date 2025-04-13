@@ -1,33 +1,55 @@
 <div class="player-list-container">
-    <h2>Magyar Kosárlabda Játékosok</h2>
-    
-    <div class="team-selector">
-      <label for="team-select">Csapat kiválasztása:</label>
-      <select id="team-select" [(ngModel)]="selectedTeam">
-        <option *ngFor="let team of teams" [value]="team">{{team}}</option>
-      </select>
-    </div>
+  <h2>Magyar Kosárlabda Játékosok</h2>
   
-    <table class="player-table">
-      <thead>
-        <tr>
-          <th (click)="sortPlayers('name')">Név {{getSortIcon('name')}}</th>
-          <th (click)="sortPlayers('team')">Csapat {{getSortIcon('team')}}</th>
-          <th (click)="sortPlayers('position')">Poszt {{getSortIcon('position')}}</th>
-          <th (click)="sortPlayers('height')">Magasság (cm) {{getSortIcon('height')}}</th>
-          <th (click)="sortPlayers('birthYear')">Születési év {{getSortIcon('birthYear')}}</th>
-          <th (click)="sortPlayers('nationality')">Nemzetiség {{getSortIcon('nationality')}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let player of filteredPlayers">
-          <td>{{player.name}}</td>
-          <td>{{player.team}}</td>
-          <td>{{player.position}}</td>
-          <td>{{player.height}}</td>
-          <td>{{player.birthYear}}</td>
-          <td>{{player.nationality}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="filter-container">
+    <mat-form-field>
+      <mat-label>Csapat kiválasztása</mat-label>
+      <mat-select [(ngModel)]="selectedTeam">
+        <mat-option *ngFor="let team of teams" [value]="team">
+          {{team}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
+
+  <table mat-table [dataSource]="filteredPlayers" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z8">
+    <!-- Név oszlop -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Név</th>
+      <td mat-cell *matCellDef="let player">{{player.name}}</td>
+    </ng-container>
+
+    <!-- Csapat oszlop -->
+    <ng-container matColumnDef="team">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Csapat</th>
+      <td mat-cell *matCellDef="let player">{{player.team}}</td>
+    </ng-container>
+
+    <!-- Poszt oszlop -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Poszt</th>
+      <td mat-cell *matCellDef="let player">{{player.position}}</td>
+    </ng-container>
+
+    <!-- Magasság oszlop -->
+    <ng-container matColumnDef="height">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Magasság (cm)</th>
+      <td mat-cell *matCellDef="let player">{{player.height}}</td>
+    </ng-container>
+
+    <!-- Születési év oszlop -->
+    <ng-container matColumnDef="birthYear">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Születési év</th>
+      <td mat-cell *matCellDef="let player">{{player.birthYear}}</td>
+    </ng-container>
+
+    <!-- Nemzetiség oszlop -->
+    <ng-container matColumnDef="nationality">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nemzetiség</th>
+      <td mat-cell *matCellDef="let player">{{player.nationality}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

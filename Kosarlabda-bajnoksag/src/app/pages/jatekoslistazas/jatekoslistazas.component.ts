@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 interface Player {
   id: number;
@@ -15,11 +20,20 @@ interface Player {
 @Component({
   selector: 'app-jatekoslistazas',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatTableModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule
+  ],
   templateUrl: './jatekoslistazas.component.html',
-  styleUrl: './jatekoslistazas.component.scss'
+  styleUrls: ['./jatekoslistazas.component.scss']
 })
 export class JatekoslistazasComponent {
+  displayedColumns: string[] = ['name', 'team', 'position', 'height', 'birthYear', 'nationality'];
   players: Player[] = [
     { id: 1, name: 'Hanga Ádám', team: 'Alba Fehérvár', position: 'Bedobó', height: 200, birthYear: 1989, nationality: 'Magyar' },
     { id: 2, name: 'Keller Ákos', team: 'Falco KC Szombathely', position: 'Irányító', height: 190, birthYear: 1995, nationality: 'Magyar' },
@@ -58,36 +72,42 @@ export class JatekoslistazasComponent {
   ];
 
   selectedTeam: string = 'Összes csapat';
-  sortColumn: string = 'name';
-  sortDirection: 'asc' | 'desc' = 'asc';
+  sort: Sort = { active: 'name', direction: 'asc' };
 
   get filteredPlayers(): Player[] {
-    if (this.selectedTeam === 'Összes csapat') {
-      return this.players;
+    let players = this.players;
+    
+    if (this.selectedTeam !== 'Összes csapat') {
+      players = players.filter(player => player.team === this.selectedTeam);
     }
-    return this.players.filter(player => player.team === this.selectedTeam);
+
+    return this.sortData(players.slice());
   }
 
-  sortPlayers(column: string): void {
-    if (this.sortColumn === column) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.sortColumn = column;
-      this.sortDirection = 'asc';
+  sortData(data: Player[]): Player[] {
+    if (!this.sort.active || this.sort.direction === '') {
+      return data;
     }
 
-    this.players.sort((a, b) => {
-      const aValue = a[column as keyof Player];
-      const bValue = b[column as keyof Player];
-      
-      if (aValue < bValue) return this.sortDirection === 'asc' ? -1 : 1;
-      if (aValue > bValue) return this.sortDirection === 'asc' ? 1 : -1;
-      return 0;
+    return data.sort((a, b) => {
+      const isAsc = this.sort.direction === 'asc';
+      switch (this.sort.active) {
+        case 'name': return compare(a.name, b.name, isAsc);
+        case 'team': return compare(a.team, b.team, isAsc);
+        case 'position': return compare(a.position, b.position, isAsc);
+        case 'height': return compare(a.height, b.height, isAsc);
+        case 'birthYear': return compare(a.birthYear, b.birthYear, isAsc);
+        case 'nationality': return compare(a.nationality, b.nationality, isAsc);
+        default: return 0;
+      }
     });
   }
 
-  getSortIcon(column: string): string {
-    if (this.sortColumn !== column) return '⇅';
-    return this.sortDirection === 'asc' ? '↑' : '↓';
+  onSortChange(sortState: Sort) {
+    this.sort = sortState;
   }
+}
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

@@ -13,17 +13,19 @@ import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,
+  imports: [
+    //RouterOutlet,
     HomeComponent,
-    CsapatAdatokComponent,
+    //CsapatAdatokComponent,
     CsapatlistazasComponent,
-    JatekosAdatokComponent,
+    //JatekosAdatokComponent,
     JatekoslistazasComponent,
-    MatchAdatokComponent,
+    //MatchAdatokComponent,
     MeccsnaptarComponent,
     TabellaComponent,
     HeaderComponent,
-    NgIf],
+    //NgIf
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

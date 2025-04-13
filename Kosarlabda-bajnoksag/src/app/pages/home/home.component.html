@@ -9,7 +9,7 @@
         <h2>Legfrissebb hírek</h2>
         <div class="news-card" *ngFor="let news of featuredNews">
           <h3>{{news.title}}</h3>
-          <p class="news-date">{{news.date}}</p>
+          <p class="news-date">{{news.date | hungarianDate}}</p>
           <p>{{news.summary}}</p>
         </div>
       </section>
@@ -36,7 +36,7 @@
               <span class="vs">vs</span>
               <span class="away-team">{{match.awayTeam}}</span>
             </div>
-            <p class="match-date">{{match.date}}</p>
+            <p class="match-date">{{match.date | hungarianDate}}</p>
           </div>
         </div>
       </section>

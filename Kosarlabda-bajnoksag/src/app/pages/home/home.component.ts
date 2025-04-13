@@ -1,10 +1,12 @@
+// src/app/pages/home/home.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HungarianDatePipe } from '../../shared/pipes/hungarian-date.pipe'; // Módosított útvonal
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, HungarianDatePipe], // Pipe hozzáadva
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
@@ -31,11 +33,12 @@ export class HomeComponent {
     { name: 'Hanga Ádám', team: 'Alba Fehérvár', points: 28.5, rebounds: 8.2, assists: 6.7 },
     { name: 'Keller Ákos', team: 'Falco KC Szombathely', points: 25.3, rebounds: 5.8, assists: 7.4 },
     { name: 'Vojvoda Dávid', team: 'Zalakerámia ZTE KK', points: 23.7, rebounds: 7.1, assists: 5.2 }
+
   ];
 
   upcomingMatches = [
     { homeTeam: 'DEAC', awayTeam: 'Kecskeméti TE', date: '2023-10-15' },
-    { homeTeam: 'Atomerőmű SE', awayTeam: 'PVSK-Panthers', date: '2023-10-15' },
+     { homeTeam: 'Atomerőmű SE', awayTeam: 'PVSK-Panthers', date: '2023-10-15' },
     { homeTeam: 'Sopron KC', awayTeam: 'Alba Fehérvár', date: '2023-10-16' }
   ];
 }
