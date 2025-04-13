@@ -15,18 +15,22 @@
       </section>
   
       <section class="stats-section">
-        <div class="top-players">
-          <h2>A legjobb játékosok</h2>
-          <div class="player-card" *ngFor="let player of topPlayers">
-            <h3>{{player.name}}</h3>
-            <p>{{player.team}}</p>
-            <div class="player-stats">
-              <span>Pontok: {{player.points}}</span>
-              <span>Lepattanó: {{player.rebounds}}</span>
-              <span>Gólpassz: {{player.assists}}</span>
-            </div>
-          </div>
-        </div>
+    
+        <div class="player-card" 
+          *ngFor="let player of topPlayers"
+        [ngClass]="{
+        'top-player': player.points > 25,
+        'average-player': player.points <= 25 && player.points > 20,
+        'beginner-player': player.points <= 20
+        }">
+      <h3>{{player.name}}</h3>
+      <p>{{player.team}}</p>
+      <div class="player-stats">
+      <span>Pontok: {{player.points}}</span>
+      <span>Lepattanó: {{player.rebounds}}</span>
+      <span>Gólpassz: {{player.assists}}</span>
+      </div>
+      </div>
   
         <div class="upcoming-matches">
           <h2>Közelgő mérkőzések</h2>
