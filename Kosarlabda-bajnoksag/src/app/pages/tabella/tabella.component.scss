@@ -8,8 +8,46 @@
     h2 {
       color: #006400;
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 24px;
+      margin-bottom: 25px;
+      font-size: 26px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e67e22;
+      position: relative;
+  
+      &::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background-color: #006400;
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+  
+    .filter-container {
+      margin-bottom: 25px;
+      display: flex;
+      justify-content: flex-end;
+  
+      mat-form-field {
+        width: 100%;
+        max-width: 300px;
+  
+        .mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+  
+        .mat-form-field-outline {
+          color: rgba(0, 100, 0, 0.2);
+        }
+  
+        .mat-select-arrow {
+          color: #006400;
+        }
+      }
     }
   }
   

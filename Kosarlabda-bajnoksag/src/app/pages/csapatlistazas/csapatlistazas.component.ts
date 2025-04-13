@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 interface Team {
   id: number;
@@ -15,7 +18,14 @@ interface Team {
 @Component({
   selector: 'app-csapatlistazas',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatSortModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule
+  ],
   templateUrl: './csapatlistazas.component.html',
   styleUrls: ['./csapatlistazas.component.scss']
 })
@@ -33,15 +43,26 @@ export class CsapatlistazasComponent {
     { id: 9, name: 'Sopron KC', city: 'Sopron', founded: 1975, championships: 0, league: 'NB I/A' },
     { id: 10, name: 'PVSK-Panthers', city: 'Pécs', founded: 2005, championships: 0, league: 'NB I/A' }
   ];
+  
+  filteredTeams: Team[] = [...this.teams];
+  filterOption: string = 'all';
+
+  applyFilter() {
+    if (this.filterOption === 'champions') {
+      this.filteredTeams = this.teams.filter(team => team.championships > 0);
+    } else {
+      this.filteredTeams = [...this.teams];
+    }
+  }
 
   sortData(sort: Sort) {
-    const data = this.teams.slice();
+    const data = this.filteredTeams.slice();
     if (!sort.active || sort.direction === '') {
-      this.teams = data;
+      this.filteredTeams = data;
       return;
     }
 
-    this.teams = data.sort((a, b) => {
+    this.filteredTeams = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'name': return compare(a.name, b.name, isAsc);

@@ -1,7 +1,17 @@
 <div class="team-list-container">
   <h2>Magyar Kosárlabda Csapatok</h2>
 
-  <table mat-table [dataSource]="teams" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
+  <div class="filter-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Szűrés</mat-label>
+      <mat-select [(ngModel)]="filterOption" (selectionChange)="applyFilter()">
+        <mat-option value="all">Összes csapat</mat-option>
+        <mat-option value="champions">Csak bajnok csapatok</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <table mat-table [dataSource]="filteredTeams" matSort (matSortChange)="sortData($event)" class="mat-elevation-z8">
     <!-- Név oszlop -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Csapatnév</th>
