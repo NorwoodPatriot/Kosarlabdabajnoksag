@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule, Sort } from '@angular/material/sort';
 
 interface Team {
   id: number;
@@ -13,11 +15,12 @@ interface Team {
 @Component({
   selector: 'app-csapatlistazas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatTableModule, MatSortModule],
   templateUrl: './csapatlistazas.component.html',
-  styleUrl: './csapatlistazas.component.scss'
+  styleUrls: ['./csapatlistazas.component.scss']
 })
 export class CsapatlistazasComponent {
+  displayedColumns: string[] = ['name', 'city', 'founded', 'championships', 'league'];
   teams: Team[] = [
     { id: 1, name: 'Alba Fehérvár', city: 'Székesfehérvár', founded: 1991, championships: 12, league: 'NB I/A' },
     { id: 2, name: 'Falco KC Szombathely', city: 'Szombathely', founded: 1954, championships: 1, league: 'NB I/A' },
@@ -31,29 +34,26 @@ export class CsapatlistazasComponent {
     { id: 10, name: 'PVSK-Panthers', city: 'Pécs', founded: 2005, championships: 0, league: 'NB I/A' }
   ];
 
-  sortColumn: string = 'name';
-  sortDirection: 'asc' | 'desc' = 'asc';
-
-  sortTeams(column: string): void {
-    if (this.sortColumn === column) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.sortColumn = column;
-      this.sortDirection = 'asc';
+  sortData(sort: Sort) {
+    const data = this.teams.slice();
+    if (!sort.active || sort.direction === '') {
+      this.teams = data;
+      return;
     }
 
-    this.teams.sort((a, b) => {
-      const aValue = a[column as keyof Team];
-      const bValue = b[column as keyof Team];
-      
-      if (aValue < bValue) return this.sortDirection === 'asc' ? -1 : 1;
-      if (aValue > bValue) return this.sortDirection === 'asc' ? 1 : -1;
-      return 0;
+    this.teams = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name': return compare(a.name, b.name, isAsc);
+        case 'city': return compare(a.city, b.city, isAsc);
+        case 'founded': return compare(a.founded, b.founded, isAsc);
+        case 'championships': return compare(a.championships, b.championships, isAsc);
+        default: return 0;
+      }
     });
   }
+}
 
-  getSortIcon(column: string): string {
-    if (this.sortColumn !== column) return '⇅';
-    return this.sortDirection === 'asc' ? '↑' : '↓';
-  }
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

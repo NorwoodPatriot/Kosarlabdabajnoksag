@@ -1,28 +1,21 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, MatToolbarModule, MatButtonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Output() selectedPage: EventEmitter<string> = new EventEmitter();
-
-  constructor(){
-    console.log("construtor called");
-  }
-
-  ngOnInit(): void {
-    console.log("ngOnInit called");
-  }
-
-  ngAfterViewInit(): void {
-    console.log("ngAfterViewInit called");
-  }
+  @Output() selectedPage = new EventEmitter<string>();
+  activePage: string = 'home';
 
   menuSwitch(pageValue: string) {
+    this.activePage = pageValue;
     this.selectedPage.emit(pageValue);
   }
-
 }

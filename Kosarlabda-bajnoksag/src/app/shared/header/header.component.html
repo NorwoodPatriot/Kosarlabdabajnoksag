@@ -1,7 +1,25 @@
-<select #pageValue (change)="menuSwitch(pageValue.value)">
-    <option value="home">Home</option>
-    <option value="tabella">Tabella</option>
-    <option value="meccsnaptar">Meccsnaptar</option>
-    <option value="jatekoslistazas">Játékosok</option>
-    <option value="csapatlistazas">Csapatok</option>
-</select>
+<mat-toolbar color="primary">
+    <span>Kosárlabda Bajnokság</span>
+    
+    <nav class="menu-items">
+      <button mat-button 
+              (click)="menuSwitch('home')"
+              [class.active]="activePage === 'home'">Kezdőlap</button>
+              
+      <button mat-button 
+              (click)="menuSwitch('tabella')"
+              [class.active]="activePage === 'tabella'">Tabella</button>
+              
+      <button mat-button 
+              (click)="menuSwitch('meccsnaptar')"
+              [class.active]="activePage === 'meccsnaptar'">Mérkőzések</button>
+              
+      <button mat-button 
+              (click)="menuSwitch('jatekoslistazas')"
+              [class.active]="activePage === 'jatekoslistazas'">Játékosok</button>
+              
+      <button mat-button 
+              (click)="menuSwitch('csapatlistazas')"
+              [class.active]="activePage === 'csapatlistazas'">Csapatok</button>
+    </nav>
+  </mat-toolbar>
