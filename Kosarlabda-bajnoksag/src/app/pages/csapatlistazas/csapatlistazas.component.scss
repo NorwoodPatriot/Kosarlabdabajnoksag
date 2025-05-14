@@ -16,41 +16,41 @@
     padding-bottom: 10px;
     border-bottom: 2px solid #e67e22;
     position: relative;
+  }
 
-    &::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 3px;
-      background-color: #006400;
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+  h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: #006400;
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .filter-container {
     margin-bottom: 25px;
     display: flex;
     justify-content: flex-end;
+  }
 
-    mat-form-field {
-      width: 100%;
-      max-width: 300px;
+  .filter-container mat-form-field {
+    width: 100%;
+    max-width: 300px;
+  }
 
-      .mat-form-field-wrapper {
-        padding-bottom: 0;
-      }
+  .filter-container mat-form-field .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
 
-      .mat-form-field-outline {
-        color: rgba(0, 100, 0, 0.2);
-      }
+  .filter-container mat-form-field .mat-form-field-outline {
+    color: rgba(0, 100, 0, 0.2);
+  }
 
-      .mat-select-arrow {
-        color: #006400;
-      }
-    }
+  .filter-container mat-form-field .mat-select-arrow {
+    color: #006400;
   }
 }
 
@@ -58,98 +58,191 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  overflow: hidden;
+  overflow: hidden; /* Helps with border-radius on the container */
+}
 
-  .mat-header-cell {
-    font-weight: bold;
-    color: white;
-    background-color: #006400;
-    font-size: 15px;
-    padding: 15px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-
-    &.mat-sort-header-sorted {
-      color: #e67e22;
-    }
+.mat-header-cell {
+  font-weight: bold;
+  color: white;
+  background-color: #006400;
+  font-size: 15px;
+  padding: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  /* Add border-top-left/right-radius to the first/last header cells */
+  &:first-child {
+      border-top-left-radius: 8px; /* Assuming the container has border-radius */
   }
-
-  .mat-cell {
-    padding: 12px 15px;
-    color: #333;
-    border-bottom: 1px solid rgba(0, 100, 0, 0.1);
-  }
-
-  .mat-row {
-    transition: background-color 0.3s ease;
-
-    &:nth-child(even) {
-      background-color: rgba(0, 100, 0, 0.03);
-    }
-
-    &:hover {
-      background-color: rgba(230, 126, 34, 0.1);
-    }
-  }
-
-  .mat-column-name {
-    min-width: 180px;
-    font-weight: bold;
-    color: #006400;
-  }
-
-  .mat-column-city {
-    min-width: 150px;
-  }
-
-  .mat-column-founded {
-    min-width: 120px;
-  }
-
-  .mat-column-championships {
-    min-width: 140px;
-    font-weight: bold;
-    color: #e67e22;
-  }
-
-  .mat-column-league {
-    min-width: 100px;
+  &:last-child {
+      border-top-right-radius: 8px; /* Assuming the container has border-radius */
   }
 }
 
+.mat-header-cell.mat-sort-header-sorted {
+  color: #e67e22;
+}
+
+.mat-cell {
+  padding: 12px 15px;
+  color: #333;
+  border-bottom: 1px solid rgba(0, 100, 0, 0.1);
+}
+
+.mat-row {
+  transition: background-color 0.3s ease;
+}
+
+.mat-row:nth-child(even) {
+  background-color: rgba(0, 100, 0, 0.03);
+}
+
+.mat-row:hover {
+  background-color: rgba(230, 126, 34, 0.1);
+}
+
+/* Add border-bottom-left/right-radius to the first/last cells of the last row */
+.mat-row:last-child .mat-cell:first-child {
+    border-bottom-left-radius: 8px; /* Assuming the container has border-radius */
+}
+.mat-row:last-child .mat-cell:last-child {
+    border-bottom-right-radius: 8px; /* Assuming the container has border-radius */
+}
+
+
+.mat-column-name {
+  min-width: 180px;
+  font-weight: bold;
+  color: #006400;
+}
+
+.mat-column-city {
+  min-width: 150px;
+}
+
+.mat-column-founded {
+  min-width: 120px;
+}
+
+.mat-column-championships {
+  min-width: 140px;
+  font-weight: bold;
+  color: #e67e22;
+}
+
+.mat-column-league {
+  min-width: 100px;
+}
+
+/* === Mobile Styles (max-width: 768px) === */
 @media (max-width: 768px) {
   .team-list-container {
     padding: 15px;
     margin: 15px;
     width: calc(100% - 30px);
-    box-shadow: none;
-
-    h2 {
-      font-size: 22px;
-      margin-bottom: 20px;
-    }
-
-    .filter-container {
-      margin-bottom: 15px;
-      
-      mat-form-field {
-        max-width: 100%;
-      }
-    }
+    box-shadow: none; /* Remove box-shadow on mobile for a cleaner look */
   }
 
+  .team-list-container h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .team-list-container .filter-container {
+    margin-bottom: 15px;
+    justify-content: center; /* Center filter on mobile */
+  }
+
+  .team-list-container .filter-container mat-form-field {
+    max-width: 100%;
+  }
+
+  /* === Table Stacking Styles for Mobile === */
   .mat-table {
-    display: block;
-    min-width: 650px;
-    
-    .mat-header-cell {
-      padding: 12px 10px;
-      font-size: 14px;
-    }
-    
-    .mat-cell {
-      padding: 10px;
-      font-size: 14px;
-    }
+    display: block; /* Table becomes a block element */
+    width: 100%;
+    /* REMOVE min-width to allow it to shrink */
+    /* min-width: 650px; */ /* Ezt a sort töröld ki vagy kommenteld */
+  }
+
+  .mat-header-row {
+    display: none; /* Hide the header row on mobile */
+  }
+
+  .mat-row {
+    display: block; /* Each row becomes a block */
+    border: 1px solid rgba(0, 100, 0, 0.2); /* Add a border to separate rows */
+    margin-bottom: 15px; /* Space between stacked rows */
+    padding: 10px;
+    border-radius: 4px;
+    background-color: white; /* Ensure rows have a background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow for stacked rows */
+  }
+
+  /* Keep even row background on stacked rows, adjust opacity */
+  .mat-row:nth-child(even) {
+    background-color: rgba(0, 100, 0, 0.05);
+  }
+
+  .mat-row:hover {
+      background-color: rgba(230, 126, 34, 0.05); /* Lighter hover for stacked rows */
+  }
+
+
+  .mat-cell {
+    display: block; /* Each cell becomes a block */
+    text-align: right; /* Align cell content to the right */
+    margin-bottom: 10px; /* Space between stacked cells (data points) */
+    padding: 5px 10px; /* Adjust padding */
+    border-bottom: none; /* Remove cell borders */
+    position: relative; /* Needed for absolute positioning of the label */
+    padding-left: 50%; /* Make space for the label on the left */
+    word-wrap: break-word; /* Prevent long words from overflowing */
+    overflow-wrap: break-word; /* Prevent long words from overflowing */
+  }
+
+  /* Hide the last cell's bottom margin */
+   .mat-cell:last-child {
+     margin-bottom: 0;
+   }
+
+   /* Remove border-radius from cells in stacked layout */
+   .mat-row:last-child .mat-cell:first-child,
+   .mat-row:last-child .mat-cell:last-child {
+       border-bottom-left-radius: 0;
+       border-bottom-right-radius: 0;
+   }
+
+
+  .mat-cell:before {
+    content: attr(data-label); /* Get the label text from the data-label attribute */
+    position: absolute;
+    left: 10px; /* Position the label on the left */
+    width: 45%; /* Give the label space */
+    font-weight: bold;
+    color: #006400; /* Color for the labels */
+    text-align: left; /* Align label text to the left */
+    white-space: nowrap; /* Prevent label text from wrapping */
+    overflow: hidden; /* Hide overflowing label text */
+    text-overflow: ellipsis; /* Add ellipsis for overflowing label text */
+  }
+
+  /* Optional: Adjust specific column styles on mobile if needed */
+  .mat-column-name .mat-cell {
+    font-weight: bold; /* Keep bold for name */
+    color: #006400; /* Keep color for name */
+  }
+
+  .mat-column-championships .mat-cell {
+     color: #e67e22; /* Keep color for championships */
+     font-weight: bold; /* Keep bold for championships */
+  }
+
+  /* You might not need min-width on columns in stacked layout */
+  .mat-column-name,
+  .mat-column-city,
+  .mat-column-founded,
+  .mat-column-championships,
+  .mat-column-league {
+      min-width: auto; /* Reset min-width */
   }
 }

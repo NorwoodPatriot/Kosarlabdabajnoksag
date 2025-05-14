@@ -1,66 +1,66 @@
-
 .player-list-container {
   padding: 20px;
   max-width: 1100px;
   margin: 0 auto;
   font-family: 'Arial', sans-serif;
+}
 
-  h2 {
-    color: #006400;
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 26px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e67e22;
-    position: relative;
+.player-list-container h2 {
+  color: #006400;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e67e22;
+  position: relative;
+}
 
-    &::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 3px;
-      background-color: #006400;
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-
-  .filter-container {
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: flex-end;
-
-    mat-form-field {
-      width: 100%;
-      max-width: 300px;
-
-      .mat-form-field-wrapper {
-        padding-bottom: 0;
-      }
-
-      .mat-form-field-outline {
-        color: rgba(0, 100, 0, 0.2);
-      }
-
-      .mat-select-arrow {
-        color: #006400;
-      }
-    }
-  }
+.player-list-container h2::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #006400;
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .filter-container {
-  margin-bottom: 20px;
-  mat-form-field {
-    width: 100%;
-    max-width: 300px;
-  }
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: flex-end;
 }
 
+.filter-container mat-form-field {
+  width: 100%;
+  max-width: 300px;
+}
+
+.filter-container mat-form-field .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.filter-container mat-form-field .mat-form-field-outline {
+  color: rgba(0, 100, 0, 0.2);
+}
+
+.filter-container mat-form-field .mat-select-arrow {
+  color: #006400;
+}
+
+/* Scrollozható táblázat konténer */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Táblázat alapstílus */
 table {
   width: 100%;
+  min-width: 700px; // biztosítja a vízszintes scrollt, ha túl sok az oszlop
 }
 
 .mat-header-cell {
@@ -69,18 +69,38 @@ table {
   background-color: #f8f8f8;
 }
 
+.mat-cell {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+}
+
 .mat-row:hover {
   background-color: #f5f5f5;
 }
 
+/* Mobilnézet optimalizálás */
 @media (max-width: 768px) {
   .player-list-container {
     padding: 10px;
     max-width: 100%;
+    margin: 10px;
+  }
+
+  .player-list-container h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .filter-container {
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  .table-responsive {
     overflow-x: auto;
   }
-  
+
   table {
-    min-width: 800px;
+    min-width: 600px;
   }
 }

@@ -1,133 +1,158 @@
-
 .standings-container {
-    padding: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-    font-family: 'Arial', sans-serif;
-  
-    h2 {
-      color: #006400;
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 26px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #e67e22;
-      position: relative;
-  
-      &::after {
-        content: '';
-        display: block;
-        width: 60px;
-        height: 3px;
-        background-color: #006400;
-        position: absolute;
-        bottom: -2px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    }
-  
-    .filter-container {
-      margin-bottom: 25px;
-      display: flex;
-      justify-content: flex-end;
-  
-      mat-form-field {
-        width: 100%;
-        max-width: 300px;
-  
-        .mat-form-field-wrapper {
-          padding-bottom: 0;
-        }
-  
-        .mat-form-field-outline {
-          color: rgba(0, 100, 0, 0.2);
-        }
-  
-        .mat-select-arrow {
-          color: #006400;
-        }
-      }
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: 'Arial', sans-serif;
+
+  h2 {
+    color: #006400;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 26px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e67e22;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background-color: #006400;
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
-  
-  .standings-table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-    
-    th, td {
-      padding: 12px 15px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-  
-    th {
-      background-color: #f8f8f8;
-      color: #333;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-  
-      &:hover {
-        background-color: #e9e9e9;
-      }
-    }
-  
-    .team-name {
-      text-align: left;
-      font-weight: bold;
-    }
-  
-    .points {
-      font-weight: bold;
-      color: #006400;
-    }
-  
-    .positive {
-      color: #008000;
-      font-weight: bold;
-    }
-  
-    .negative {
-      color: #ff0000;
-      font-weight: bold;
-    }
-  
-    .highlight {
-      background-color: rgba(0, 100, 0, 0.1);
-    }
-  }
-  
-  .legend {
+
+  .filter-container {
+    margin-bottom: 25px;
     display: flex;
-    gap: 20px;
-    justify-content: center;
-    font-size: 14px;
-    color: #555;
-  
-    div {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-  
-    .highlight-box {
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      background-color: rgba(0, 100, 0, 0.1);
-      border: 1px solid #006400;
-    }
-  
-    .positive {
-      color: #008000;
-      font-weight: bold;
-    }
-  
-    .negative {
-      color: #ff0000;
-      font-weight: bold;
+    justify-content: flex-end;
+
+    mat-form-field {
+      width: 100%;
+      max-width: 300px;
+
+      .mat-form-field-wrapper {
+        padding-bottom: 0;
+      }
+
+      .mat-form-field-outline {
+        color: rgba(0, 100, 0, 0.2);
+      }
+
+      .mat-select-arrow {
+        color: #006400;
+      }
     }
   }
+}
+
+/* Görgethető konténer */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Táblázat */
+.standings-table {
+  width: 100%;
+  min-width: 800px; // biztosítja a görgethetőséget kis képernyőn
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+
+  th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #e9e9e9;
+    }
+  }
+
+  .team-name {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .points {
+    font-weight: bold;
+    color: #006400;
+  }
+
+  .positive {
+    color: #008000;
+    font-weight: bold;
+  }
+
+  .negative {
+    color: #ff0000;
+    font-weight: bold;
+  }
+
+  .highlight {
+    background-color: rgba(0, 100, 0, 0.1);
+  }
+}
+
+/* Legendák */
+.legend {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  font-size: 14px;
+  color: #555;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .highlight-box {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-color: rgba(0, 100, 0, 0.1);
+    border: 1px solid #006400;
+  }
+
+  .positive {
+    color: #008000;
+    font-weight: bold;
+  }
+
+  .negative {
+    color: #ff0000;
+    font-weight: bold;
+  }
+}
+
+/* Mobilnézet optimalizálás */
+@media (max-width: 768px) {
+  .standings-container {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .standings-table {
+    min-width: 700px;
+  }
+}
