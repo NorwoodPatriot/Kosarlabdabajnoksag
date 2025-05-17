@@ -1,11 +1,247 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core'; // <-- Importáld a NgZone-t
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import {
+  Firestore,
+  collection,
+  addDoc,
+  CollectionReference,
+  doc,
+  deleteDoc,
+  updateDoc,
+  query,
+  where,
+  getDocs
+} from '@angular/fire/firestore';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+
+
+interface PlayerFormData {
+  name: string;
+  team: string;
+  position: string;
+  height: number | null;
+  birthYear: number | null;
+  nationality: string;
+}
+
+interface Player {
+  id: string;
+  name: string;
+  team: string;
+  position: string;
+  height: number;
+  birthYear: number;
+  nationality: string;
+}
+
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+  ],
   templateUrl: './admin.component.html',
-  styleUrl: './admin.component.scss'
+  styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent {
 
+  player: PlayerFormData = {
+    name: '', team: '', position: '', height: null, birthYear: null, nationality: ''
+  };
+  teams: string[] = [
+    'Alba Fehérvár',
+    'Falco KC Szombathely',
+    'Zalakerámia ZTE KK',
+    'Egis Körmend',
+    'DEAC',
+    'OSE Lions',
+    'Kecskeméti TE',
+    'Atomerőmű SE',
+    'Sopron KC',
+    'PVSK-Panthers'
+  ];
+  positions: string[] = [
+    'Irányító',
+    'Bedobó',
+    'Center'
+  ];
+
+
+  searchName: string = '';
+  searchResults: Player[] = [];
+
+  private playersCollection: CollectionReference;
+
+
+  constructor(private firestore: Firestore, private ngZone: NgZone) { // <-- Injektáld a NgZone-t
+     this.playersCollection = collection(this.firestore, 'players');
+  }
+
+  async onSubmitNewPlayer() {
+    if (!this.player.name || !this.player.team || !this.player.position || this.player.height === null || this.player.birthYear === null || !this.player.nationality) {
+      console.error('Kérlek töltsd ki az összes mezőt az új játékos hozzáadásához!');
+      alert('Kérlek töltsd ki az összes mezőt!');
+      return;
+    }
+
+    try {
+      const docRef = await addDoc(this.playersCollection, {
+        name: this.player.name,
+        team: this.player.team,
+        position: this.player.position,
+        height: this.player.height,
+        birthYear: this.player.birthYear,
+        nationality: this.player.nationality
+      });
+
+      console.log('Új játékos hozzáadva a Firestore-hoz:', this.player.name, 'Dokumentum ID:', docRef.id);
+
+      this.player = { name: '', team: '', position: '', height: null, birthYear: null, nationality: '' };
+
+      alert('Új játékos sikeresen hozzáadva!');
+
+    } catch (e) {
+      console.error('Hiba az új játékos hozzáadásakor:', e);
+      alert('Hiba történt az új játékos hozzáadása során.');
+    }
+  }
+
+
+  async onSearch() {
+    if (!this.searchName) {
+      this.searchResults = [];
+      return;
+    }
+
+    const playersQuery = query(
+      this.playersCollection,
+      where('name', '>=', this.searchName),
+      where('name', '<=', this.searchName + '\uf8ff')
+    );
+
+    try {
+      const querySnapshot = await getDocs(playersQuery);
+      this.searchResults = [];
+
+      // Itt nincs szükség ngZone.run()-ra, mert a getDocs await-elve van
+      querySnapshot.forEach((doc) => {
+        const playerData = { id: doc.id, ...doc.data() as Omit<Player, 'id'> };
+        this.searchResults.push(JSON.parse(JSON.stringify(playerData)));
+      });
+
+      console.log('Keresési eredmények:', this.searchResults);
+
+      if (this.searchResults.length === 0 && this.searchName.length > 0) {
+        alert('Nincs a keresési feltételnek megfelelő játékos.');
+      }
+
+    } catch (e) {
+      console.error('Hiba a keresés során:', e);
+      alert('Hiba történt a keresés során.');
+    }
+  }
+
+
+  // --- Játékos törlése metódus (DELETE) ---
+  async deletePlayer(playerId: string, playerName: string) {
+    if (!playerId) {
+        console.error('Nincs játékos ID a törléshez.');
+        alert('Hiba: Nincs játékos ID a törléshez.');
+        return;
+    }
+
+    const confirmDelete = confirm(`Biztosan törölni szeretnéd a(z) ${playerName} nevű játékost?`);
+    if (!confirmDelete) {
+      return;
+    }
+
+   try {
+        console.log('deletePlayer - playerId típusa:', typeof playerId, 'értéke:', playerId); // DEBUG SOR
+        const playerDocRef = doc(this.firestore, 'players', String(playerId));
+        await deleteDoc(playerDocRef);
+      this.ngZone.run(() => {
+        this.searchResults = [...this.searchResults.filter(player => player.id !== playerId)];
+      });
+
+      alert(`${playerName} sikeresen törölve!`);
+
+    } catch (e) {
+      console.error('Hiba a játékos törlésekor:', playerName, 'ID:', playerId, e);
+      alert(`Hiba történt a(z) ${playerName} törlése során.`);
+    }
+  }
+
+  // --- Játékos frissítése metódus (UPDATE - név frissítése példaként) ---
+  async updatePlayer(player: Player) {
+      if (!player || !player.id) {
+          console.error('Nincs játékos objektum vagy ID a frissítéshez.');
+          alert('Hiba: Nincs játékos objektum vagy ID a frissítéshez.');
+          return;
+      }
+
+      const originalPlayerName = player.name;
+      const newName = prompt(`Kérlek add meg az új nevet a(z) ${originalPlayerName} játékosnak:`, originalPlayerName);
+
+      if (newName === null || newName.trim() === '') {
+          if (newName === null) {
+              console.log('Név frissítés megszakítva.');
+          } else {
+              alert('A név nem lehet üres.');
+          }
+          return;
+      }
+
+      if (newName.trim() === originalPlayerName.trim()) {
+          console.log('A név nem változott, nincs szükség frissítésre.');
+          return;
+      }
+
+      try {
+            console.log('updatePlayer - player.id típusa:', typeof player.id, 'értéke:', player.id); // DEBUG SOR
+            const playerDocRef = doc(this.firestore, 'players', String(player.id));
+            await updateDoc(playerDocRef, { name: newName });
+        this.ngZone.run(() => {
+          const index = this.searchResults.findIndex(p => p.id === player.id);
+          if (index !== -1) {
+              // Készítsünk egy mély másolatot a frissített objektumból
+              const updatedPlayer = JSON.parse(JSON.stringify({ ...this.searchResults[index], name: newName }));
+
+              // Másik módszer a tömb frissítésére: manuális újraépítés az új objektummal
+              const newResults: Player[] = [];
+              for (let i = 0; i < this.searchResults.length; i++) {
+                  if (i === index) {
+                      newResults.push(updatedPlayer); // Hozzáadjuk a frissített játékost
+                  } else {
+                      // Itt is készíthetünk mély másolatot, ha gyanús, hogy az eredeti objektumok okozzák a hibát
+                      // VAGY: newResults.push(JSON.parse(JSON.stringify(this.searchResults[i])));
+                      newResults.push(this.searchResults[i]); // Hozzáadjuk a többi, változatlan játékost
+                  }
+              }
+              this.searchResults = newResults; // Hozzárendeljük az új tömböt
+          }
+        });
+
+        alert(`${originalPlayerName} adatai sikeresen frissítve új névre: ${newName}!`);
+
+      } catch (e) {
+        console.error('Hiba a játékos frissítésekor:', originalPlayerName, 'ID:', player.id, e);
+        alert(`Hiba történt a(z) ${originalPlayerName} adatok frissítése során.`);
+      }
+    }
 }

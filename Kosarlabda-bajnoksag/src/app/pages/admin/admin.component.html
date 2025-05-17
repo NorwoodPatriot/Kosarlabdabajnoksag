@@ -1,1 +1,79 @@
-<p>admin works!</p>
+<div class="admin-page-container">
+  <h1>Adminisztrációs Felület</h1>
+
+  <div class="add-player-section">
+    <h2>Új Játékos Hozzáadása</h2>
+    <form (ngSubmit)="onSubmitNewPlayer()">
+      <mat-form-field appearance="fill">
+        <mat-label>Név</mat-label>
+        <input matInput [(ngModel)]="player.name" name="playerName" required>
+      </mat-form-field>
+       <mat-form-field appearance="fill">
+        <mat-label>Csapat</mat-label>
+        <mat-select [(ngModel)]="player.team" name="playerTeam" required>
+          <mat-option *ngFor="let team of teams" [value]="team">
+            {{ team }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+       <mat-form-field appearance="fill">
+        <mat-label>Poszt</mat-label>
+        <mat-select [(ngModel)]="player.position" name="playerPosition" required>
+          <mat-option *ngFor="let pos of positions" [value]="pos">
+            {{ pos }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Magasság (cm)</mat-label>
+        <input matInput type="number" [(ngModel)]="player.height" name="playerHeight" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Születési év</mat-label>
+        <input matInput type="number" [(ngModel)]="player.birthYear" name="playerBirthYear" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Nemzetiség</mat-label>
+        <input matInput [(ngModel)]="player.nationality" name="playerNationality" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Játékos Hozzáadása</button>
+    </form>
+  </div>
+
+  <hr>
+
+  <div class="manage-players-section">
+    <h2>Játékos Keresése és Kezelése</h2>
+
+    <form (ngSubmit)="onSearch()">
+      <mat-form-field appearance="fill">
+        <mat-label>Keresés név alapján</mat-label>
+        <input matInput [(ngModel)]="searchName" name="searchName">
+      </mat-form-field>
+      <button mat-raised-button type="submit">Keresés</button>
+    </form>
+
+    <mat-nav-list *ngIf="searchResults.length > 0">
+      <mat-list-item *ngFor="let result of searchResults">
+        <span matListItemTitle>{{ result.name }} ({{ result.team }} - {{ result.position }})</span>
+        <span matListItemLine>Magasság: {{ result.height }} cm, Szül. év: {{ result.birthYear }}, Nemzetiség: {{ result.nationality }}</span>
+
+        <div matListItemMeta>
+           <button mat-icon-button color="primary" (click)="updatePlayer(result)" title="Játékos módosítása">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deletePlayer(result.id, result.name)" title="Játékos törlése">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+
+    <div *ngIf="searchResults.length === 0 && searchName.length > 0">
+       <p>Nincs a keresési feltételnek megfelelő játékos.</p>
+    </div>
+
+  </div>
+
+  </div>
