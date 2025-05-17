@@ -1,6 +1,7 @@
 
 <app-header (selectedPage)="changePage($event)"
  (selectedPage)="changePage($event)"
+ (logoutClicked)="onLogout()" 
   [isLoggedIn]="isLoggedIn"     
   [activePage]="page"></app-header>
 @switch (page) {

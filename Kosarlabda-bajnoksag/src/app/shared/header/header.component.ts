@@ -8,25 +8,33 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [
     CommonModule,
-    NgIf, 
+    NgIf, // Szükséges a *ngIf használatához a HTML sablonban
     MatToolbarModule,
     MatButtonModule
   ],
-  templateUrl: './header.component.html', 
+  templateUrl: './header.component.html', // Itt van a HTML sablon
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  
   @Input() isLoggedIn: boolean = false;
 
   @Output() selectedPage = new EventEmitter<string>();
+  @Output() logoutClicked = new EventEmitter<void>();
+
 
   @Input() activePage: string = 'home';
 
   menuSwitch(pageValue: string) {
-  
+   
     this.selectedPage.emit(pageValue);
   }
 
+  // <-- ÚJ: Metódus a kijelentkezés gomb kattintásának kezelésére
+  // Ez a metódus hívódik meg a gomb kattintásakor
+  onLogoutClick() {
+    console.log('Kijelentkezés gomb kattintva a fejlécben.');
+    // Itt hívjuk meg a logoutClicked eseménykibocsátó emit() metódusát
+    this.logoutClicked.emit();
+  }
 
 }

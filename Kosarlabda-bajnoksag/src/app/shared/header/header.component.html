@@ -37,5 +37,8 @@
             (click)="menuSwitch('login')"
             [class.active]="activePage === 'login'">Bejelentkezés</button>
 
+        <button mat-button
+            *ngIf="isLoggedIn"
+            (click)="onLogoutClick()">Kijelentkezés</button>
   </nav>
 </mat-toolbar>
