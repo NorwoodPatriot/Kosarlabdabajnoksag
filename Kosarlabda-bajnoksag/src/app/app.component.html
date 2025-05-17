@@ -1,37 +1,6 @@
+<app-header 
+  [isLoggedIn]="isLoggedIn"
+  (logoutClicked)="onLogout()">
+</app-header>
 
-<app-header (selectedPage)="changePage($event)"
- (selectedPage)="changePage($event)"
- (logoutClicked)="onLogout()" 
-  [isLoggedIn]="isLoggedIn"     
-  [activePage]="page"></app-header>
-@switch (page) {
-  @case ('home') {
-    <div class="home">
-      <app-home></app-home>
-    </div>
-  }
-  @case ('tabella') {
-      <app-tabella></app-tabella>
-  }
-  @case ('meccsnaptar') {
-      <app-meccsnaptar></app-meccsnaptar>
-  }
-  @case ('jatekoslistazas'){
-      <app-jatekoslistazas></app-jatekoslistazas>
-  }
-  @case ('csapatlistazas') {
-      <app-csapatlistazas></app-csapatlistazas>
-  }
-  @case ('login') {
-    <app-login (loginSuccess)="setPageToHome()"></app-login>
-  }
-  @case ('admin') {
-    <app-admin></app-admin>
-  }
-  @case ('ujfelhasznalo') {
-    <app-ujfelhasznalo></app-ujfelhasznalo>
-  }
-  @default {
-    <h1>Page not found ...</h1>
-  }
-}
+<router-outlet></router-outlet>

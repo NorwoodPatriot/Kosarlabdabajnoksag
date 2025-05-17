@@ -1,0 +1,217 @@
+.admin-page-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.9)), 
+                    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 10c-22.1 0-40 17.9-40 40s17.9 40 40 40 40-17.9 40-40-17.9-40-40-40zm0 10c16.6 0 30 13.4 30 30S66.6 80 50 80 20 66.6 20 50 33.4 20 50 20zm0 10c-11 0-20 9-20 20s9 20 20 20 20-9 20-20-9-20-20-20z" fill="%23FFA500" opacity="0.1"/></svg>');
+
+  h1 {
+    color: #FF6B00;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    position: relative;
+    padding-bottom: 10px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: #FF6B00;
+      border-radius: 3px;
+    }
+  }
+
+  h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: '🏀';
+      margin-right: 10px;
+      font-size: 1.2em;
+    }
+  }
+
+  hr {
+    margin: 2rem 0;
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(255,107,0,0), rgba(255,107,0,0.75), rgba(255,107,0,0));
+  }
+
+  .add-player-section, .manage-players-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    border: 1px solid #e0e0e0;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: #FF6B00;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+
+      mat-form-field {
+        width: 100%;
+
+        .mat-form-field-outline {
+          color: #ddd;
+        }
+
+        .mat-form-field-outline-thick {
+          color: #FF6B00;
+        }
+      }
+
+      button[type="submit"] {
+        grid-column: 1 / -1;
+        justify-self: start;
+        margin-top: 1rem;
+        background-color: #FF6B00;
+        color: white;
+        font-weight: 600;
+        padding: 0.75rem 2rem;
+        border-radius: 25px;
+        transition: all 0.3s;
+        box-shadow: 0 2px 4px rgba(255,107,0,0.3);
+
+        &:hover {
+          background-color: #E55D00;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(255,107,0,0.3);
+        }
+      }
+    }
+  }
+
+  .manage-players-section {
+    form {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+
+      mat-form-field {
+        flex-grow: 1;
+
+        .mat-input-element {
+          font-weight: 500;
+        }
+      }
+
+      button[type="submit"] {
+        background-color: #333;
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: #222;
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    mat-nav-list {
+      margin-top: 1.5rem;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e0e0e0;
+
+      mat-list-item {
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.3s;
+        padding: 1rem;
+
+        &:hover {
+          background-color: #FFF5EB;
+          transform: translateX(5px);
+        }
+
+        span[matListItemTitle] {
+          font-weight: 600;
+          color: #333;
+        }
+
+        span[matListItemLine] {
+          color: #666;
+          font-size: 0.9em;
+        }
+
+        [matListItemMeta] {
+          display: flex;
+          gap: 0.5rem;
+
+          button {
+            transition: all 0.2s;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            mat-icon {
+              font-size: 18px;
+            }
+
+            &:first-child {
+              background-color: rgba(255,107,0,0.1);
+
+              &:hover {
+                background-color: rgba(255,107,0,0.2);
+              }
+            }
+
+            &:last-child {
+              background-color: rgba(255,0,0,0.1);
+
+              &:hover {
+                background-color: rgba(255,0,0,0.2);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    p {
+      color: #666;
+      text-align: center;
+      margin: 1.5rem 0;
+      font-style: italic;
+      padding: 1rem;
+      background-color: #FFF5EB;
+      border-radius: 8px;
+    }
+  }
+}

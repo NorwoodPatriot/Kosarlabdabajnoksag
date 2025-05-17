@@ -1,158 +1,104 @@
 .standings-container {
-  padding: 20px;
-  max-width: 1000px;
+  padding: 1rem;
+  max-width: 1200px;
   margin: 0 auto;
-  font-family: 'Arial', sans-serif;
 
   h2 {
-    color: #006400;
+    color: #FF6B00;
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 26px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e67e22;
-    position: relative;
-
-    &::after {
-      content: '';
-      display: block;
-      width: 60px;
-      height: 3px;
-      background-color: #006400;
-      position: absolute;
-      bottom: -2px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  }
-
-  .filter-container {
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: flex-end;
-
-    mat-form-field {
-      width: 100%;
-      max-width: 300px;
-
-      .mat-form-field-wrapper {
-        padding-bottom: 0;
-      }
-
-      .mat-form-field-outline {
-        color: rgba(0, 100, 0, 0.2);
-      }
-
-      .mat-select-arrow {
-        color: #006400;
-      }
-    }
-  }
-}
-
-/* Görgethető konténer */
-.table-responsive {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Táblázat */
-.standings-table {
-  width: 100%;
-  min-width: 800px; // biztosítja a görgethetőséget kis képernyőn
-  border-collapse: collapse;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-
-  th, td {
-    padding: 12px 15px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
-
-  th {
-    background-color: #f8f8f8;
-    color: #333;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: #e9e9e9;
-    }
-  }
-
-  .team-name {
-    text-align: left;
-    font-weight: bold;
-  }
-
-  .points {
-    font-weight: bold;
-    color: #006400;
-  }
-
-  .positive {
-    color: #008000;
-    font-weight: bold;
-  }
-
-  .negative {
-    color: #ff0000;
-    font-weight: bold;
-  }
-
-  .highlight {
-    background-color: rgba(0, 100, 0, 0.1);
-  }
-}
-
-/* Legendák */
-.legend {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  font-size: 14px;
-  color: #555;
-
-  div {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .highlight-box {
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    background-color: rgba(0, 100, 0, 0.1);
-    border: 1px solid #006400;
-  }
-
-  .positive {
-    color: #008000;
-    font-weight: bold;
-  }
-
-  .negative {
-    color: #ff0000;
-    font-weight: bold;
-  }
-}
-
-/* Mobilnézet optimalizálás */
-@media (max-width: 768px) {
-  .standings-container {
-    padding: 10px;
-    max-width: 100%;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
   }
 
   .table-responsive {
     overflow-x: auto;
+    margin-bottom: 1.5rem;
   }
 
   .standings-table {
-    min-width: 700px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+
+    th {
+      background-color: #FF6B00;
+      color: white;
+      padding: 0.75rem 1rem;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      white-space: nowrap;
+
+      &:hover {
+        background-color: #E55D00;
+      }
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    tr.highlight {
+      background-color: rgba(255,107,0,0.05);
+      font-weight: 500;
+    }
+
+    .team-name {
+      font-weight: 500;
+    }
+
+    .points {
+      font-weight: 600;
+      color: #FF6B00;
+    }
+
+    .positive {
+      color: #2E7D32;
+      font-weight: 500;
+    }
+
+    .negative {
+      color: #C62828;
+      font-weight: 500;
+    }
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .highlight-box {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-color: rgba(255,107,0,0.2);
+      border: 1px solid #FF6B00;
+    }
+
+    .positive {
+      color: #2E7D32;
+      font-weight: 500;
+    }
+
+    .negative {
+      color: #C62828;
+      font-weight: 500;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .standings-table {
+      min-width: 800px;
+    }
   }
 }

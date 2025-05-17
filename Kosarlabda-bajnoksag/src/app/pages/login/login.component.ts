@@ -1,11 +1,8 @@
-import { Component, inject, Output, EventEmitter } from '@angular/core'; // Output és EventEmitter importálása
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-// A Router importot elvileg itt hagyhatod, de a navigate sort majd töröljük vagy kikommentezzük, ha nem a routerrel navigálsz
 import { Router } from '@angular/router';
-
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
-
 
 @Component({
   selector: 'app-login',
@@ -18,39 +15,40 @@ import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-
   email: string = '';
   password: string = '';
   errorMessage: string | null = null;
 
-  // Definiálunk egy kimeneti eseményt
-  @Output() loginSuccess = new EventEmitter<void>(); // Esemény, ami sikeres bejelentkezéskor sül ki
-
   private auth: Auth = inject(Auth);
-  // private router: Router = inject(Router); // Ha nem a routerrel navigálsz, ez már nem kell ide
-
-  constructor() { }
+  private router = inject(Router);
 
   async onLogin() {
     this.errorMessage = null;
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
+      await signInWithEmailAndPassword(
         this.auth,
         this.email,
         this.password
       );
-
-      console.log('Sikeres bejelentkezés:', userCredential.user);
-
-      // Sikeres bejelentkezés esetén kibocsátjuk az eseményt
-      this.loginSuccess.emit(); // <-- Esemény kibocsátása
-
-   
-
+      
+      // Navigate to home after successful login
+      this.router.navigate(['/home']);
     } catch (error: any) {
-      console.error('Hiba a bejelentkezés során:', error.message);
-      this.errorMessage = error.message;
+      console.error('Login error:', error);
+      this.errorMessage = this.getUserFriendlyError(error.code);
     }
+  }
+
+  private getUserFriendlyError(code: string): string {
+    const errorMap: Record<string, string> = {
+      'auth/invalid-email': 'Érvénytelen email cím',
+      'auth/user-disabled': 'A felhasználó letiltva',
+      'auth/user-not-found': 'Nem található ilyen felhasználó',
+      'auth/wrong-password': 'Hibás jelszó',
+      'auth/too-many-requests': 'Túl sok próbálkozás, próbáld újra később'
+    };
+    
+    return errorMap[code] || 'Hiba történt a bejelentkezés során';
   }
 }

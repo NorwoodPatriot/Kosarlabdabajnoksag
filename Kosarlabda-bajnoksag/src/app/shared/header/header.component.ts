@@ -1,40 +1,33 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core'; // Input importálva
-import { CommonModule, NgIf } from '@angular/common'; // NgIf importálva a *ngIf miatt
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule, NgIf } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
     CommonModule,
-    NgIf, // Szükséges a *ngIf használatához a HTML sablonban
+    NgIf,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    RouterModule
   ],
-  templateUrl: './header.component.html', // Itt van a HTML sablon
+  templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
   @Input() isLoggedIn: boolean = false;
-
-  @Output() selectedPage = new EventEmitter<string>();
   @Output() logoutClicked = new EventEmitter<void>();
 
+  constructor(private router: Router) {}
 
-  @Input() activePage: string = 'home';
-
-  menuSwitch(pageValue: string) {
-   
-    this.selectedPage.emit(pageValue);
+  get activePage(): string {
+    return this.router.url.split('/')[1] || 'home';
   }
 
-  // <-- ÚJ: Metódus a kijelentkezés gomb kattintásának kezelésére
-  // Ez a metódus hívódik meg a gomb kattintásakor
   onLogoutClick() {
-    console.log('Kijelentkezés gomb kattintva a fejlécben.');
-    // Itt hívjuk meg a logoutClicked eseménykibocsátó emit() metódusát
     this.logoutClicked.emit();
   }
-
 }
