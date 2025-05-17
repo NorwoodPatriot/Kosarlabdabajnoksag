@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { CsapatAdatokComponent } from './pages/csapat-adatok/csapat-adatok.component';
 import { CsapatlistazasComponent } from './pages/csapatlistazas/csapatlistazas.component';
-import { JatekosAdatokComponent } from './pages/jatekos-adatok/jatekos-adatok.component';
 import { JatekoslistazasComponent } from './pages/jatekoslistazas/jatekoslistazas.component';
-import { MatchAdatokComponent } from './pages/match-adatok/match-adatok.component';
 import { MeccsnaptarComponent } from './pages/meccsnaptar/meccsnaptar.component';
 import { TabellaComponent } from './pages/tabella/tabella.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -17,11 +14,8 @@ import { NgIf } from '@angular/common';
   imports: [
     //RouterOutlet,
     HomeComponent,
-    //CsapatAdatokComponent,
     CsapatlistazasComponent,
-    //JatekosAdatokComponent,
     JatekoslistazasComponent,
-    //MatchAdatokComponent,
     MeccsnaptarComponent,
     TabellaComponent,
     HeaderComponent,
