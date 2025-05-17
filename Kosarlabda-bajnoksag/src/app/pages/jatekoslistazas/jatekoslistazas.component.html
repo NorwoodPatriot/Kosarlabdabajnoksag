@@ -1,7 +1,5 @@
 <div class="player-list-container">
-  <h2>Magyar Kosárlabda Játékosok</h2>
-
-  <div class="filter-container">
+  <h2>Magyar Kosárlabda Játékosok (Firestore-ból)</h2> <div class="filter-container">
     <mat-form-field>
       <mat-label>Csapat kiválasztása</mat-label>
       <mat-select [(ngModel)]="selectedTeam">
@@ -10,43 +8,37 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
 
-  <!-- Görgethető táblázat konténer -->
+    </div>
+
   <div class="table-responsive">
     <table mat-table [dataSource]="filteredPlayers" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z8">
-      
-      <!-- Név oszlop -->
+
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Név</th>
         <td mat-cell *matCellDef="let player">{{ player.name }}</td>
       </ng-container>
 
-      <!-- Csapat oszlop -->
       <ng-container matColumnDef="team">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Csapat</th>
         <td mat-cell *matCellDef="let player">{{ player.team }}</td>
       </ng-container>
 
-      <!-- Poszt oszlop -->
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Poszt</th>
         <td mat-cell *matCellDef="let player">{{ player.position }}</td>
       </ng-container>
 
-      <!-- Magasság oszlop -->
       <ng-container matColumnDef="height">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Magasság (cm)</th>
         <td mat-cell *matCellDef="let player">{{ player.height }}</td>
       </ng-container>
 
-      <!-- Születési év oszlop -->
       <ng-container matColumnDef="birthYear">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Születési év</th>
         <td mat-cell *matCellDef="let player">{{ player.birthYear }}</td>
       </ng-container>
 
-      <!-- Nemzetiség oszlop -->
       <ng-container matColumnDef="nationality">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Nemzetiség</th>
         <td mat-cell *matCellDef="let player">{{ player.nationality }}</td>
@@ -54,6 +46,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+
+      </table>
   </div>
 </div>

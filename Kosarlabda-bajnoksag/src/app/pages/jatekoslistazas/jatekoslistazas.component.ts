@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // Importáld az OnInit-et
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
@@ -6,9 +6,20 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+// Nincs szükség MatButtonModule-ra, ha nincs feltöltő gomb
+// import { MatButtonModule } from '@angular/material/button';
+
+// Importáld a Firestore modulokat az olvasáshoz
+import { Firestore, collection, collectionData, CollectionReference } from '@angular/fire/firestore';
+import { Observable } from 'rxjs'; // Importáld az Observable-t
+
 
 interface Player {
-  id: number;
+  // Az 'id' mező hozzáadása hasznos lehet, ha a Firestore dokumentum ID-t is kezelni akarod
+  // az objektumon belül (pl. törléshez vagy szerkesztéshez).
+  // Ha addDoc-ot használtál feltöltéskor, a dokumentum ID automatikusan generálódott.
+  // Ha a collectionData-t idField: 'id' opcióval hívod meg, ez a mező feltöltődik.
+  id?: string;
   name: string;
   team: string;
   position: string;
@@ -27,35 +38,24 @@ interface Player {
     MatSortModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatInputModule
+    MatInputModule,
+    // Nincs MatButtonModule import, ha nincs gomb
+    // MatButtonModule
   ],
   templateUrl: './jatekoslistazas.component.html',
   styleUrls: ['./jatekoslistazas.component.scss']
 })
-export class JatekoslistazasComponent {
+export class JatekoslistazasComponent implements OnInit { // Implementáld az OnInit interfészt
   displayedColumns: string[] = ['name', 'team', 'position', 'height', 'birthYear', 'nationality'];
-  players: Player[] = [
-    { id: 1, name: 'Hanga Ádám', team: 'Alba Fehérvár', position: 'Bedobó', height: 200, birthYear: 1989, nationality: 'Magyar' },
-    { id: 2, name: 'Keller Ákos', team: 'Falco KC Szombathely', position: 'Irányító', height: 190, birthYear: 1995, nationality: 'Magyar' },
-    { id: 3, name: 'Vojvoda Dávid', team: 'Zalakerámia ZTE KK', position: 'Bedobó', height: 197, birthYear: 1996, nationality: 'Magyar' },
-    { id: 4, name: 'Pölös Péter', team: 'Egis Körmend', position: 'Center', height: 208, birthYear: 1998, nationality: 'Magyar' },
-    { id: 5, name: 'Dénes Benedek', team: 'DEAC', position: 'Irányító', height: 188, birthYear: 2000, nationality: 'Magyar' },
-    { id: 6, name: 'Kovács Zoltán', team: 'OSE Lions', position: 'Bedobó', height: 195, birthYear: 1993, nationality: 'Magyar' },
-    { id: 7, name: 'Perl Zsolt', team: 'Kecskeméti TE', position: 'Center', height: 205, birthYear: 1995, nationality: 'Magyar' },
-    { id: 8, name: 'Pongó Krisztofer', team: 'Atomerőmű SE', position: 'Irányító', height: 192, birthYear: 1997, nationality: 'Magyar' },
-    { id: 9, name: 'Tóth Szilárd', team: 'Sopron KC', position: 'Bedobó', height: 198, birthYear: 1994, nationality: 'Magyar' },
-    { id: 10, name: 'Kovács Norbert', team: 'PVSK-Panthers', position: 'Center', height: 206, birthYear: 1991, nationality: 'Magyar' },
-    { id: 11, name: 'Simon Péter', team: 'Alba Fehérvár', position: 'Irányító', height: 193, birthYear: 1992, nationality: 'Magyar' },
-    { id: 12, name: 'Nagy Ádám', team: 'Falco KC Szombathely', position: 'Center', height: 210, birthYear: 1990, nationality: 'Magyar' },
-    { id: 13, name: 'Horváth Gergő', team: 'Zalakerámia ZTE KK', position: 'Bedobó', height: 199, birthYear: 1997, nationality: 'Magyar' },
-    { id: 14, name: 'Farkas Dániel', team: 'Egis Körmend', position: 'Irányító', height: 185, birthYear: 1999, nationality: 'Magyar' },
-    { id: 15, name: 'Balogh Márton', team: 'DEAC', position: 'Bedobó', height: 196, birthYear: 1996, nationality: 'Magyar' },
-    { id: 16, name: 'Szabó Krisztián', team: 'OSE Lions', position: 'Center', height: 207, birthYear: 1994, nationality: 'Magyar' },
-    { id: 17, name: 'Török Gábor', team: 'Kecskeméti TE', position: 'Irányító', height: 191, birthYear: 1998, nationality: 'Magyar' },
-    { id: 18, name: 'Molnár Tamás', team: 'Atomerőmű SE', position: 'Bedobó', height: 194, birthYear: 1993, nationality: 'Magyar' },
-    { id: 19, name: 'Fehér László', team: 'Sopron KC', position: 'Center', height: 209, birthYear: 1990, nationality: 'Magyar' },
-    { id: 20, name: 'Varga István', team: 'PVSK-Panthers', position: 'Irányító', height: 187, birthYear: 1995, nationality: 'Magyar' }
-  ];
+
+  // A 'players' tömb mostantól üresen indul, és a Firestore-ból töltődik fel
+  players: Player[] = [];
+
+  // Hivatkozás a Firestore kollekcióra
+  private playersCollection: CollectionReference;
+  // Observable a játékos adatoknak
+  private players$!: Observable<Player[]>;
+
 
   teams: string[] = [
     'Összes csapat',
@@ -74,9 +74,29 @@ export class JatekoslistazasComponent {
   selectedTeam: string = 'Összes csapat';
   sort: Sort = { active: 'name', direction: 'asc' };
 
+  constructor(private firestore: Firestore) {
+     // Hivatkozás a Firestore kollekcióra a konstruktorban
+     this.playersCollection = collection(this.firestore, 'players');
+     // Készítsünk egy observable-t a kollekció adatokból
+     // Az idField: 'id' beállítás hozzáadja a Firestore dokumentum ID-jét az objektumhoz
+     this.players$ = collectionData(this.playersCollection, { idField: 'id' }) as Observable<Player[]>;
+   }
+
+   ngOnInit(): void {
+     // Feliratkozunk az observable-re, hogy beolvassuk az adatokat Firestore-ból
+     // Ez a subscribe fut le a komponens inicializálásakor
+     this.players$.subscribe(firestorePlayers => {
+       // Amikor új adatok érkeznek (pl. betöltéskor vagy változáskor), frissítjük a komponens 'players' tömbjét
+       this.players = firestorePlayers;
+       console.log('Játékosok beolvasva Firestore-ból:', this.players);
+     });
+   }
+
+
+  // A get filteredPlayers getter most már a Firestore-ból beolvasott this.players tömböt szűri és rendezi
   get filteredPlayers(): Player[] {
     let players = this.players;
-    
+
     if (this.selectedTeam !== 'Összes csapat') {
       players = players.filter(player => player.team === this.selectedTeam);
     }
@@ -98,6 +118,8 @@ export class JatekoslistazasComponent {
         case 'height': return compare(a.height, b.height, isAsc);
         case 'birthYear': return compare(a.birthYear, b.birthYear, isAsc);
         case 'nationality': return compare(a.nationality, b.nationality, isAsc);
+        // Ha az id-t is megjeleníted vagy rendezed, ide vedd fel:
+        // case 'id': return compare(a.id!, b.id!, isAsc); // Feltételezi, hogy az id string
         default: return 0;
       }
     });
@@ -106,6 +128,9 @@ export class JatekoslistazasComponent {
   onSortChange(sortState: Sort) {
     this.sort = sortState;
   }
+
+  // A feltöltő metódus és az eredeti players adat már nincs itt
+  // async uploadPlayersToFirestore() { ... }
 }
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {
