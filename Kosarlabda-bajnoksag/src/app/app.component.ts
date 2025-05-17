@@ -8,6 +8,7 @@ import { JatekoslistazasComponent } from './pages/jatekoslistazas/jatekoslistaza
 import { MatchAdatokComponent } from './pages/match-adatok/match-adatok.component';
 import { MeccsnaptarComponent } from './pages/meccsnaptar/meccsnaptar.component';
 import { TabellaComponent } from './pages/tabella/tabella.component';
+import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { NgIf } from '@angular/common';
 
@@ -24,8 +25,8 @@ import { NgIf } from '@angular/common';
     MeccsnaptarComponent,
     TabellaComponent,
     HeaderComponent,
-    //NgIf
-  ],
+    LoginComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
