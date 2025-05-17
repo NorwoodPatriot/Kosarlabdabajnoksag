@@ -1,15 +1,17 @@
 <div class="player-list-container">
-  <h2>Magyar Kosárlabda Játékosok (Firestore-ból)</h2> <div class="filter-container">
+  <h2>Magyar Kosárlabda Játékosok (Firestore-ból)</h2>
+  <div class="filter-container">
     <mat-form-field>
       <mat-label>Csapat kiválasztása</mat-label>
       <mat-select [(ngModel)]="selectedTeam">
-        <mat-option *ngFor="let team of teams" [value]="team">
-          {{ team }}
-        </mat-option>
+        @for (team of teams; track team) {
+          <mat-option [value]="team">
+            {{ team }}
+          </mat-option>
+        }
       </mat-select>
     </mat-form-field>
-
-    </div>
+  </div>
 
   <div class="table-responsive">
     <table mat-table [dataSource]="filteredPlayers" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z8">
@@ -47,6 +49,6 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-      </table>
+    </table>
   </div>
 </div>

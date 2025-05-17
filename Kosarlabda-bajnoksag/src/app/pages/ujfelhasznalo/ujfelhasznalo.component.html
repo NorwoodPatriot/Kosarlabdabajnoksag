@@ -1,1 +1,64 @@
-<p>ujfelhasznalo works!</p>
+<div class="register-container">
+  <h2>Új felhasználó regisztrálása</h2>
+  
+  @if (errorMessage()) {
+    <div class="error-message">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (successMessage()) {
+    <div class="success-message">
+      {{ successMessage() }}
+    </div>
+  }
+
+  <form (ngSubmit)="register()" class="register-form">
+    <div class="form-group">
+      <label for="email">Email cím</label>
+      <input 
+        type="email" 
+        id="email" 
+        [value]="email()" 
+        (input)="email.set($any($event.target).value)"
+        required
+        placeholder="pelda@email.com"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="password">Jelszó</label>
+      <input 
+        type="password" 
+        id="password" 
+        [value]="password()" 
+        (input)="password.set($any($event.target).value)"
+        required
+        placeholder="Legalább 6 karakter"
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Jelszó megerősítése</label>
+      <input 
+        type="password" 
+        id="confirmPassword" 
+        [value]="confirmPassword()" 
+        (input)="confirmPassword.set($any($event.target).value)"
+        required
+        placeholder="Írd be újra a jelszót"
+      >
+    </div>
+
+    <button type="submit" [disabled]="isLoading()">
+      @if (isLoading()) {
+        <span class="button-loading">
+          <span class="spinner"></span>
+          Feldolgozás...
+        </span>
+      } @else {
+        <span>Regisztráció</span>
+      }
+    </button>
+  </form>
+</div>

@@ -1,33 +1,37 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { Router, RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-    CommonModule,
-    NgIf,
     MatToolbarModule,
     MatButtonModule,
+    MatIconModule,
     RouterModule
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  @Input() isLoggedIn: boolean = false;
+  @Input() isLoggedIn = false;
   @Output() logoutClicked = new EventEmitter<void>();
+  
+  menuOpen = signal(false);
 
-  constructor(private router: Router) {}
+  toggleMenu() {
+    this.menuOpen.update(value => !value);
+  }
 
-  get activePage(): string {
-    return this.router.url.split('/')[1] || 'home';
+  closeMenu() {
+    this.menuOpen.set(false);
   }
 
   onLogoutClick() {
+    this.closeMenu();
     this.logoutClicked.emit();
   }
 }

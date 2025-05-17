@@ -1,44 +1,67 @@
-<mat-toolbar color="primary">
-  <span routerLink="/home" style="cursor: pointer;">Kosárlabda Bajnokság</span>
+<mat-toolbar class="mobile-header">
+  <!-- Hamburger gomb -->
+  <button mat-icon-button class="hamburger" (click)="toggleMenu()">
+    <mat-icon>{{ menuOpen() ? 'close' : 'menu' }}</mat-icon>
+  </button>
 
-  <nav class="menu-items">
-    <button mat-button
-            routerLink="/home"
-            [class.active]="activePage === 'home'">Kezdőlap</button>
+  <!-- Logo -->
+  <span class="logo" routerLink="/home">🏀 Kosárlabda</span>
 
-    <button mat-button
-            routerLink="/tabella"
-            [class.active]="activePage === 'tabella'">Tabella</button>
+  <!-- Navigációs menü -->
+  <nav class="nav-menu" [class.menu-open]="menuOpen()">
+    <div class="nav-items">
+      <a mat-button routerLink="/home" (click)="closeMenu()">
+        <mat-icon>home</mat-icon>
+        Kezdőlap
+      </a>
+      
+      <a mat-button routerLink="/tabella" (click)="closeMenu()">
+        <mat-icon>leaderboard</mat-icon>
+        Tabella
+      </a>
+      
+      <a mat-button routerLink="/meccsnaptar" (click)="closeMenu()">
+        <mat-icon>event</mat-icon>
+        Mérkőzések
+      </a>
+      
+      <a mat-button routerLink="/jatekoslistazas" (click)="closeMenu()">
+        <mat-icon>people</mat-icon>
+        Játékosok
+      </a>
+      
+      <a mat-button routerLink="/csapatlistazas" (click)="closeMenu()">
+        <mat-icon>groups</mat-icon>
+        Csapatok
+      </a>
 
-    <button mat-button
-            routerLink="/meccsnaptar"
-            [class.active]="activePage === 'meccsnaptar'">Mérkőzések</button>
-
-    <button mat-button
-            routerLink="/jatekoslistazas"
-            [class.active]="activePage === 'jatekoslistazas'">Játékosok</button>
-
-    <button mat-button
-            routerLink="/csapatlistazas"
-            [class.active]="activePage === 'csapatlistazas'">Csapatok</button>
-
-    <button mat-button
-            *ngIf="isLoggedIn"  
-            routerLink="/admin"
-            [class.active]="activePage === 'admin'">Admin</button>
-
-    <button mat-button
-            *ngIf="isLoggedIn"  
-            routerLink="/ujfelhasznalo"
-            [class.active]="activePage === 'ujfelhasznalo'">Új felhasználó</button>
-
-    <button mat-button
-            *ngIf="!isLoggedIn" 
-            routerLink="/login"
-            [class.active]="activePage === 'login'">Bejelentkezés</button>
-
-    <button mat-button
-            *ngIf="isLoggedIn"
-            (click)="onLogoutClick()">Kijelentkezés</button>
+      @if (isLoggedIn) {
+        <div class="admin-section">
+          <a mat-button routerLink="/admin" (click)="closeMenu()">
+            <mat-icon>admin_panel_settings</mat-icon>
+            Admin
+          </a>
+          <a mat-button routerLink="/ujfelhasznalo" (click)="closeMenu()">
+            <mat-icon>person_add</mat-icon>
+            Új felhasználó
+          </a>
+        </div>
+      }
+       
+    </div>
+        <div class="auth-buttons">
+      @if (!isLoggedIn) {
+        <a mat-flat-button color="primary" routerLink="/login" (click)="closeMenu()">
+          <mat-icon>login</mat-icon>
+          Bejelentkezés
+        </a>
+      } @else {
+        <button mat-flat-button color="warn" (click)="onLogoutClick()">
+          <mat-icon>logout</mat-icon>
+          Kijelentkezés
+        </button>
+      }
+    </div>
+   
   </nav>
 </mat-toolbar>

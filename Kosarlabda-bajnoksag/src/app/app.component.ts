@@ -28,7 +28,6 @@ export class AppComponent {
       this.isLoggedIn = !!user;
       console.log('Auth state changed. Logged in:', this.isLoggedIn);
       
-      // If user logs out and we're on a protected page, redirect to login
       if (!user && this.isProtectedPage()) {
         this.router.navigate(['/login']);
       }
@@ -43,7 +42,6 @@ export class AppComponent {
   async onLogout() {
     try {
       await signOut(this.auth);
-      // No need to navigate here - the authState subscription will handle it
     } catch (error) {
       console.error('Logout error:', error);
     }
