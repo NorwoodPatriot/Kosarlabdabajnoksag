@@ -38,4 +38,8 @@ export class AppComponent {
   changePage(selectedPage: string){
     this.page = selectedPage;
   }
+
+   setPageToHome() {
+    this.page = 'home';
+   }
 }
