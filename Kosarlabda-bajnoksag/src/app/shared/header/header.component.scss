@@ -1,5 +1,5 @@
 .mobile-header {
-  position:static; // Vagy fixed, attól függően, hogy fixen fent akarod-e tartani
+  position:static; 
   top: 0;
   left: 0;
   right: 0;
@@ -8,14 +8,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  height: 64px; // Állítsd be a fejléc magasságát
+  height: 64px; 
   background: linear-gradient(135deg, #1a2a3a, #2c3e50);
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 
   .hamburger {
     color: white;
     z-index: 1001;
-    display: block; // Alapértelmezetten látható mobil nézetben
+    display: block; 
   }
 
   .logo {
@@ -24,7 +24,6 @@
     font-size: 1.2rem;
     margin-left: 1rem;
     cursor: pointer;
-    // A logó középre igazítása mobil nézetben (opcionális)
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -33,28 +32,28 @@
 
   .nav-menu {
     position: fixed;
-    top: 64px; // A fejléc magassága alól induljon
-    left: -100%; // Alapértelmezetten rejtett
+    top: 64px; 
+    left: -100%; 
     width: 80%;
-    max-width: 300px; // Maximális szélesség a menünek
-    height: calc(100vh - 64px); // A teljes képernyő magassága mínusz a fejléc magassága
+    max-width: 300px; 
+    height: calc(100vh - 64px); 
     background: #2c3e50;
     transition: left 0.3s ease;
     box-shadow: 2px 0 10px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     z-index: 1000;
-    overflow-y: auto; // Görgetősáv, ha a tartalom nem fér el
+    overflow-y: auto; 
 
     &.menu-open {
-      left: 0; // Megnyitott állapotban látható
+      left: 0; 
     }
 
     .nav-items {
       display: flex;
       flex-direction: column;
       padding: 1rem;
-      flex-grow: 1; // Kitölti a rendelkezésre álló helyet
+      flex-grow: 1; 
 
       a {
         color: white;
@@ -64,7 +63,7 @@
         border-radius: 4px;
         display: flex;
         align-items: center;
-        text-decoration: none; // Link aláhúzás eltávolítása
+        text-decoration: none; 
 
         mat-icon {
           margin-right: 1rem;
@@ -81,7 +80,7 @@
         padding-top: 1rem;
 
         a {
-          color: #FFA500; // Admin linkek színe
+          color: #FFA500; 
         }
       }
     }
@@ -89,65 +88,64 @@
     .auth-buttons {
       padding: 1rem;
       border-top: 1px solid rgba(255,255,255,0.1);
-      display: flex; // Flexbox a gombokhoz
-      flex-direction: column; // Gombok egymás alatt
-      gap: 0.5rem; // Rés a gombok között
+      display: flex; 
+      flex-direction: column; 
+      gap: 0.5rem; 
 
-      button, a { // Mind a button, mind az a tag-re vonatkozzon
-        width: 100%; // Gombok kitöltik a rendelkezésre álló szélességet
+      button, a { 
+        width: 100%;
       }
     }
   }
 }
 
-// Nagyobb képernyőre (1200px és afelett)
 @media (min-width: 1200px) {
   .mobile-header {
-    position: relative; // Visszaállítjuk a pozíciót
-    height: auto; // Magasság visszaállítása
+    position: relative; 
+    height: auto; 
     padding: 0 2rem;
-    justify-content: flex-start; // Elemek balra igazítása
+    justify-content: flex-start; 
 
     .hamburger {
-      display: none; // Hamburger gomb elrejtése
+      display: none; 
     }
 
     .logo {
-      position: static; // Visszaállítjuk a pozíciót
+      position: static; 
       transform: none;
       margin-left: 0;
-      margin-right: 2rem; // Hely a logó és a menü között
+      margin-right: 2rem; 
     }
 
     .nav-menu {
-      position: static; // Visszaállítjuk a pozíciót
-      width: auto; // Szélesség visszaállítása
-      height: auto; // Magasság visszaállítása
+      position: static; 
+      width: auto; 
+      height: auto; 
       max-width: none;
-      background: transparent; // Háttér átlátszó
-      box-shadow: none; // Árnyék eltávolítása
+      background: transparent;
+      box-shadow: none; 
       padding-top: 0;
-      flex-direction: row; // Elemek egymás mellett
+      flex-direction: row; 
       align-items: center;
-      flex-grow: 1; // Kitölti a rendelkezésre álló helyet a logó mellett
+      flex-grow: 1; 
 
       .nav-items {
-        flex-direction: row; // Menüpontok egymás mellett
+        flex-direction: row; 
         padding: 0;
-        flex-grow: 0; // Nem tölti ki a rendelkezésre álló helyet
-        display: flex; // Biztosítjuk a flexboxot
+        flex-grow: 0; 
+        display: flex; 
         align-items: center;
 
         a {
           padding: 0 1rem;
-          height: 64px; // Magasság beállítása a fejléc magasságához
+          height: 64px; 
           display: flex;
           align-items: center;
-          color: white; // Linkek színe
+          color: white; 
           text-decoration: none;
 
           mat-icon {
-            margin-right: 0.5rem; // Kisebb rés az ikon és a szöveg között
+            margin-right: 0.5rem; 
           }
 
            &:hover {
@@ -160,14 +158,14 @@
           border-top: none;
           padding-top: 0;
           margin-left: 1rem;
-          border-left: 1px solid rgba(255,255,255,0.2); // Elválasztó vonal
+          border-left: 1px solid rgba(255,255,255,0.2); 
           padding-left: 1rem;
-          display: flex; // Admin linkek egymás mellett
+          display: flex; 
           align-items: center;
 
            a {
-             color: #FFA500; // Admin linkek színe
-             padding: 0 0.5rem; // Kisebb padding az admin linkeken belül
+             color: #FFA500; 
+             padding: 0 0.5rem; 
            }
         }
       }
@@ -175,15 +173,13 @@
       .auth-buttons {
         padding: 0;
         border-top: none;
-        margin-left: auto; // Jobbra tolja a gombokat
-        display: flex; // Gombok egymás mellett
+        margin-left: auto; 
+        display: flex; 
         flex-direction: row;
-        gap: 0.5rem; // Rés a gombok között
+        gap: 0.5rem; 
 
         button, a {
-          width: auto; // Gombok automatikus szélessége
-           // Opcionális: Fix szélesség beállítása a gomboknak, ha egységes méretet szeretnél
-           /* width: 120px; */
+          width: auto; 
         }
       }
     }

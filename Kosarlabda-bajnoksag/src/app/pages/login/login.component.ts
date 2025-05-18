@@ -33,7 +33,6 @@ export class LoginComponent {
         this.password
       );
       
-      // Navigate to home after successful login
       this.router.navigate(['/home']);
     } catch (error: any) {
       console.error('Login error:', error);

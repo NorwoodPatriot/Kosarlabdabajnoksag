@@ -50,13 +50,11 @@ export class TabellaComponent {
     }
 
     this.standings.sort((a, b) => {
-      // Szöveges mezők rendezése
       if (column === 'team') {
         const result = a.team.localeCompare(b.team);
         return this.sortDirection === 'asc' ? result : -result;
       }
       
-      // Számos mezők rendezése
       const aValue = a[column] as number;
       const bValue = b[column] as number;
       

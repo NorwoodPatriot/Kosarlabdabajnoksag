@@ -1,12 +1,12 @@
-// src/app/pages/home/home.component.ts
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HungarianDatePipe } from '../../shared/pipes/hungarian-date.pipe'; // Módosított útvonal
+import { HungarianDatePipe } from '../../shared/pipes/hungarian-date.pipe'; 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HungarianDatePipe], // Pipe hozzáadva
+  imports: [CommonModule, HungarianDatePipe],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })

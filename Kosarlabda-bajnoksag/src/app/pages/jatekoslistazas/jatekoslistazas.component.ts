@@ -74,23 +74,17 @@ export class JatekoslistazasComponent implements OnInit { // Implementáld az On
   sort: Sort = { active: 'name', direction: 'asc' };
 
   constructor(private firestore: Firestore) {
-     // Hivatkozás a Firestore kollekcióra a konstruktorban
      this.playersCollection = collection(this.firestore, 'players');
-     // Készítsünk egy observable-t a kollekció adatokból
-     // Az idField: 'id' beállítás hozzáadja a Firestore dokumentum ID-jét az objektumhoz
      this.players$ = collectionData(this.playersCollection, { idField: 'id' }) as Observable<Player[]>;
    }
 
    ngOnInit(): void {
      this.players$.subscribe(firestorePlayers => {
-       // Amikor új adatok érkeznek (pl. betöltéskor vagy változáskor), frissítjük a komponens 'players' tömbjét
        this.players = firestorePlayers;
        console.log('Játékosok beolvasva Firestore-ból:', this.players);
      });
    }
 
-
-  // A get filteredPlayers getter most már a Firestore-ból beolvasott this.players tömböt szűri és rendezi
   get filteredPlayers(): Player[] {
     let players = this.players;
 
@@ -115,8 +109,6 @@ export class JatekoslistazasComponent implements OnInit { // Implementáld az On
         case 'height': return compare(a.height, b.height, isAsc);
         case 'birthYear': return compare(a.birthYear, b.birthYear, isAsc);
         case 'nationality': return compare(a.nationality, b.nationality, isAsc);
-        // Ha az id-t is megjeleníted vagy rendezed, ide vedd fel:
-        // case 'id': return compare(a.id!, b.id!, isAsc); // Feltételezi, hogy az id string
         default: return 0;
       }
     });
@@ -126,8 +118,6 @@ export class JatekoslistazasComponent implements OnInit { // Implementáld az On
     this.sort = sortState;
   }
 
-  // A feltöltő metódus és az eredeti players adat már nincs itt
-  // async uploadPlayersToFirestore() { ... }
 }
 
 function compare(a: number | string, b: number | string, isAsc: boolean) {

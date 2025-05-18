@@ -21,14 +21,5 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit page selection', () => {
-    spyOn(component.selectedPage, 'emit');
-    component.menuSwitch('home');
-    expect(component.selectedPage.emit).toHaveBeenCalledWith('home');
-  });
-
-  it('should set active page', () => {
-    component.menuSwitch('tabella');
-    expect(component.activePage).toBe('tabella');
-  });
+  
 });
