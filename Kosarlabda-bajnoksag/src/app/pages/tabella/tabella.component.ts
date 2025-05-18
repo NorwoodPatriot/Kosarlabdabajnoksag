@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PointsPipe } from '../../shared/pipes/points.pipe';
 
 interface TeamStanding {
   position: number;
@@ -17,7 +18,9 @@ interface TeamStanding {
 @Component({
   selector: 'app-tabella',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,
+    PointsPipe
+  ],
   templateUrl: './tabella.component.html',
   styleUrls: ['./tabella.component.scss']
 })

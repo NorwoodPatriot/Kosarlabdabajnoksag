@@ -26,7 +26,7 @@
           <td>{{team.wins}}</td>
           <td>{{team.draws}}</td>
           <td>{{team.losses}}</td>
-          <td class="points">{{team.points}}</td>
+          <td class="points">{{team.points | points}}</td>
           <td>{{team.goalsFor}}</td>
           <td>{{team.goalsAgainst}}</td>
           <td [class.positive]="team.goalDifference > 0" [class.negative]="team.goalDifference < 0">

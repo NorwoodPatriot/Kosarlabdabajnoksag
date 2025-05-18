@@ -48,7 +48,6 @@ interface Player {
 export class JatekoslistazasComponent implements OnInit { // Implementáld az OnInit interfészt
   displayedColumns: string[] = ['name', 'team', 'position', 'height', 'birthYear', 'nationality'];
 
-  // A 'players' tömb mostantól üresen indul, és a Firestore-ból töltődik fel
   players: Player[] = [];
 
   // Hivatkozás a Firestore kollekcióra
@@ -83,8 +82,6 @@ export class JatekoslistazasComponent implements OnInit { // Implementáld az On
    }
 
    ngOnInit(): void {
-     // Feliratkozunk az observable-re, hogy beolvassuk az adatokat Firestore-ból
-     // Ez a subscribe fut le a komponens inicializálásakor
      this.players$.subscribe(firestorePlayers => {
        // Amikor új adatok érkeznek (pl. betöltéskor vagy változáskor), frissítjük a komponens 'players' tömbjét
        this.players = firestorePlayers;
