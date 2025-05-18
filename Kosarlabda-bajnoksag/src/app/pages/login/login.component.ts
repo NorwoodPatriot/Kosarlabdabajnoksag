@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -21,10 +21,11 @@ export class LoginComponent {
 
   private auth: Auth = inject(Auth);
   private router = inject(Router);
+  isLoading = signal(false);
 
   async onLogin() {
     this.errorMessage = null;
-
+    this.isLoading.set(true);
     try {
       await signInWithEmailAndPassword(
         this.auth,
@@ -37,6 +38,9 @@ export class LoginComponent {
     } catch (error: any) {
       console.error('Login error:', error);
       this.errorMessage = this.getUserFriendlyError(error.code);
+    }
+     finally {
+      this.isLoading.set(false);
     }
   }
 
