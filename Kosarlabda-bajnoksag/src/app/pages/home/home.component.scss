@@ -11,9 +11,9 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
-  box-sizing: border-box; /* Fontos a padding helyes kezeléséhez */
-  overflow-x: hidden; /* Megakadályozza a vízszintes görgetést, ha valami kilóg */
-  width: 100%; /* Biztosítja, hogy a konténer kitöltse a rendelkezésre álló szélességet */
+  box-sizing: border-box; 
+  overflow-x: hidden; 
+  width: 100%;
 
   .hero {
     background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('../../assets/basketball-court.jpg');
@@ -25,31 +25,30 @@
     text-align: center;
     margin-bottom: 2rem;
     box-sizing: border-box;
-    width: 100%; /* Biztosítja, hogy a hero kitöltse a konténer szélességét */
+    width: 100%; 
 
     h1 {
       font-size: 1.75rem;
       margin-bottom: 1rem;
-      word-wrap: break-word; /* Hosszú szavak tördelése */
+      word-wrap: break-word; 
       overflow-wrap: break-word;
-      min-width: 0; /* Lehetővé teszi a flex/grid elemeknek a zsugorodást */
+      min-width: 0;
     }
 
     p {
       font-size: 1.25rem;
       opacity: 0.9;
-      word-wrap: break-word; /* Hosszú szavak tördelése */
+      word-wrap: break-word; 
       overflow-wrap: break-word;
-      min-width: 0; /* Lehetővé teszi a flex/grid elemeknek a zsugorodást */
+      min-width: 0;
     }
   }
 
   .content-grid {
     display: grid;
     gap: 2rem;
-    /* Alapértelmezett, egyoszlopos elrendezés mobilra */
     grid-template-columns: 1fr;
-    width: 100%; /* Biztosítja, hogy a grid kitöltse a konténer szélességét */
+    width: 100%; 
 
     section {
       background: white;
@@ -57,8 +56,8 @@
       padding: 1.5rem;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       box-sizing: border-box;
-      width: 100%; /* Biztosítja, hogy a szekciók kitöltsék a grid cella szélességét */
-      min-width: 0; /* Fontos a grid/flex elemeknél a zsugorodáshoz */
+      width: 100%; 
+      min-width: 0; 
     }
 
     .news-section {
@@ -77,7 +76,7 @@
         padding-bottom: 1rem;
         border-bottom: 1px solid #eee;
         box-sizing: border-box;
-        width: 100%; /* Biztosítja, hogy a kártya kitöltse a szülő szélességét */
+        width: 100%;
         min-width: 0;
 
         &:last-child {
@@ -110,7 +109,7 @@
         background: white;
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         box-sizing: border-box;
-        width: 100%; /* Biztosítja, hogy a kártya kitöltse a szülő szélességét */
+        width: 100%;
         min-width: 0;
 
         &.top-player {
@@ -145,8 +144,8 @@
         .player-stats {
           display: flex;
           gap: 1rem;
-          flex-wrap: wrap; /* Engedélyezi az elemek tördelését új sorba */
-          width: 100%; /* Biztosítja, hogy a flex konténer kitöltse a szülő szélességét */
+          flex-wrap: wrap;
+          width: 100%; 
           min-width: 0;
 
           span {
@@ -154,12 +153,9 @@
             padding: 0.25rem 0.5rem;
             border-radius: 4px;
             font-size: 0.9rem;
-            /* Itt is érdemes lehet tördelést engedélyezni, ha a statisztika értéke nagyon hosszú */
             word-wrap: break-word;
             overflow-wrap: break-word;
-            min-width: 0; /* Lehetővé teszi a flex itemnek a zsugorodást */
-            /* Opcionális: ha a span-ek túl szorosan vannak, beállíthatsz egy maximális szélességet */
-            /* max-width: 100%; */
+            min-width: 0; 
           }
         }
       }
@@ -182,7 +178,7 @@
           background: #f9f9f9;
           border-left: 4px solid #333;
           box-sizing: border-box;
-          width: 100%; /* Biztosítja, hogy a kártya kitöltse a szülő szélességét */
+          width: 100%; 
           min-width: 0;
 
           .match-teams {
@@ -191,18 +187,18 @@
             gap: 0.5rem;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            flex-wrap: wrap; /* Engedélyezi a csapatnevek tördelését */
+            flex-wrap: wrap;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            width: 100%; /* Biztosítja, hogy a flex konténer kitöltse a szülő szélességét */
+            width: 100%; 
             min-width: 0;
 
             .vs {
               color: #FF6B00;
               font-weight: 700;
-              min-width: 0; /* Lehetővé teszi a flex itemnek a zsugorodást */
+              min-width: 0; 
             }
-             /* A csapatneveknek is érdemes lehet min-width: 0-t adni, ha flex itemek */
+             
           }
 
           .match-date {
@@ -215,47 +211,47 @@
     }
   }
 
-  /* Média lekérdezés a kisebb képernyőkhöz (pl. 767px alatt) */
+ 
   @media (max-width: 767px) {
     .home-container {
-      padding: 0.5rem; /* Kisebb padding mobilra */
+      padding: 0.5rem; 
     }
 
     .hero {
-      padding: 1.5rem 1rem; /* Kisebb padding a hero szekcióban */
+      padding: 1.5rem 1rem;
 
       h1 {
-        font-size: 1.5rem; /* Kisebb betűméret */
+        font-size: 1.5rem;
       }
 
       p {
-        font-size: 1rem; /* Kisebb betűméret */
+        font-size: 1rem; 
       }
     }
 
     .content-grid {
-       gap: 1.5rem; /* Kisebb rés a grid elemek között */
+       gap: 1.5rem; 
     }
 
     section {
-        padding: 1rem; /* Kisebb padding a szekciókban */
+        padding: 1rem; 
     }
 
     .news-section .news-card,
     .stats-section .player-card,
     .stats-section .upcoming-matches .match-card {
-        padding: 0.8rem; /* Kisebb padding a kártyákon */
+        padding: 0.8rem; 
     }
 
     .stats-section .player-stats {
-        gap: 0.5rem; /* Kisebb rés a statisztikák között */
+        gap: 0.5rem; 
     }
   }
 
 
   @media (min-width: 768px) {
     .content-grid {
-      grid-template-columns: 1fr 1fr; /* Két oszlop 768px felett */
+      grid-template-columns: 1fr 1fr; 
     }
 
     .hero {
